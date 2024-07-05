@@ -39,7 +39,7 @@ const Index = () => {
         .then((result) => {
           const user = result.user;
           console.log(user.email);
-          navigation.navigate("Home");
+          navigation.replace("Home");
         })
         .catch((err) => {
           alert(err.message);

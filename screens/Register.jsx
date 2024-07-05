@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import {
   Text,
   View,
   SafeAreaView,
-  Image,
   TouchableOpacity,
   TextInput,
 } from "react-native";
@@ -16,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "../firebase/config";
 import { styles } from "../styles/Login";
+import url from "../components/route/api";
 
 const Index = () => {
   const [name, setName] = useState("");
@@ -27,28 +27,55 @@ const Index = () => {
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.replace("Home");
-      }
-    });
-    return unsubscribe;
-  }, []);
-
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (email !== "" && password !== "") {
-      if (email !== "" && password !== "") {
-        createUserWithEmailAndPassword(auth, email, password)
+
+      try {
+        const res = await fetch(
+          `${url}/api/user-ids`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: {
+                name: name,
+                phone: number,
+                mail: email,
+                user_type: loginType,
+              },
+            }),
+          }
+        );
+
+        console.log("Fetch response received");
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(`Failed to fetch: ${errorText}`);
+        }
+
+        console.log("Creating user with email and password");
+
+        await createUserWithEmailAndPassword(auth, email, password)
           .then((result) => {
             const user = result.user;
             console.log("User created:", user.email);
-            navigation.navigate("Home");
+            navigation.replace("Home");
           })
+
           .catch((err) => {
-            alert(err.message);
+            console.error("Error creating user:", err);
+            alert(`Error creating user: ${err.message}`);
           });
+          
+      } catch (error) {
+        console.error("Error during registration:", error);
+        alert(`Registration failed: ${error.message}`);
       }
+    } else {
+      alert("Email and password cannot be empty.");
     }
   };
 

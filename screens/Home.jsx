@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -14,30 +14,51 @@ import {
 
 import COLORS from "../components/consts/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import houses from "../components/consts/houses";
 import { useNavigation } from "@react-navigation/core";
+
+import url from "../components/route/api";
 
 const { width } = Dimensions.get("screen");
 
 const HomeScreen = () => {
+  const [flats, setFlats] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetch(`${url}/api/flats?populate=*`);
+
+      const data = await res.json();
+
+      setFlats(data.data);
+
+      setLoading(false);
+    };
+
+    getData();
+  }, [loading]);
+
   const Card = ({ house }) => {
     const navigation = useNavigation();
 
     return (
-
       <Pressable
         style={({ pressed }) => [
           {
-            opacity: pressed? 0.8 : 1,
+            opacity: pressed ? 0.8 : 1,
           },
         ]}
         onPress={() => navigation.navigate("Details", house)}
       >
         <View style={[style.card, { marginTop: 20 }]}>
-          <Image source={house.image} style={style.cardImage} />
+          <Image
+            source={{
+              uri: `${house.attributes.images.data[0].attributes.url}`,
+            }}
+            style={style.cardImage}
+          />
 
           <View style={{ marginTop: 10 }}>
-
             <View
               style={{
                 flexDirection: "row",
@@ -45,42 +66,39 @@ const HomeScreen = () => {
                 marginTop: 10,
               }}
             >
-
               <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                {house.title}
+                {house.attributes.name}
               </Text>
             </View>
 
             <Text style={{ color: COLORS.grey, fontSize: 14, marginTop: 5 }}>
-              {house.location}
+              {house.attributes.address}
             </Text>
 
             <View style={{ marginTop: 10, flexDirection: "row" }}>
               <View style={style.facility}>
                 <Icon name="hotel" size={18} />
-                <Text style={style.facilityText}>2</Text>
+                <Text style={style.facilityText}>{house.attributes.BHK}</Text>
               </View>
-
+              {/* 
               <View style={style.facility}>
                 <Icon name="bathtub" size={18} />
                 <Text style={style.facilityText}>2</Text>
-              </View>
+              </View> */}
 
               <View style={style.facility}>
                 <Icon name="aspect-ratio" size={18} />
-                <Text style={style.facilityText}>100m</Text>
+                <Text style={style.facilityText}>{house.attributes.area}</Text>
               </View>
             </View>
           </View>
         </View>
       </Pressable>
-
     );
   };
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
-
       <StatusBar
         translucent={false}
         backgroundColor={COLORS.white}
@@ -95,28 +113,24 @@ const HomeScreen = () => {
           marginTop: 20,
         }}
       >
-
         <View style={style.searchInputContainer}>
           <Icon name="search" color={COLORS.grey} size={25} />
           <TextInput placeholder="Search address, city, location" />
         </View>
-
       </View>
 
       <FlatList
         snapToInterval={width - 20}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingLeft: 20, paddingVertical: 20 }}
-        data={houses}
+        data={flats}
         renderItem={({ item }) => <Card house={item} />}
       />
-
     </SafeAreaView>
   );
 };
 
 const style = StyleSheet.create({
-
   header: {
     paddingVertical: 20,
     flexDirection: "row",
@@ -210,9 +224,8 @@ const style = StyleSheet.create({
     borderRadius: 15,
   },
 
-  facility : { flexDirection: "row", marginRight: 15 },
+  facility: { flexDirection: "row", marginRight: 15 },
   facilityText: { marginLeft: 5, color: COLORS.grey },
-
 });
 
 export default HomeScreen;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ImageBackground,
   SafeAreaView,
@@ -9,6 +9,9 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  Pressable,
+  Linking,
+  TouchableOpacity,
 } from "react-native";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -19,8 +22,27 @@ const { width } = Dimensions.get("screen");
 const Details = ({ route }) => {
   const house = route.params;
 
-  const InteriorCard = ({ interior }) => {
-    return <Image source={interior} style={style.interiorImage} />;
+  const [mainHouse, setMainHouse] = useState(
+    house.attributes.images.data[0].attributes.url
+  );
+
+  const handlePress = () => {
+    Linking.openURL(house.attributes.yt_link);
+  };
+
+  const InteriorCard = ({ item }) => {
+    return (
+      <Pressable
+        onPress={() => {
+          setMainHouse(item.item.attributes.formats.medium.url);
+        }}
+      >
+        <Image
+          source={{ uri: item.item.attributes.formats.medium.url }}
+          style={style.interiorImage}
+        />
+      </Pressable>
+    );
   };
 
   return (
@@ -29,12 +51,14 @@ const Details = ({ route }) => {
         <View style={style.backgroundImageContainer}>
           <ImageBackground
             style={style.backgroundImage}
-            source={house.image}
+            source={{ uri: mainHouse }}
           ></ImageBackground>
 
-          <View style={style.virtualTag}>
-            <Text style={{ color: COLORS.white }}>Virtual tour</Text>
-          </View>
+          <TouchableOpacity onPress={handlePress}>
+            <View style={style.virtualTag}>
+              <Text style={{ color: "white" }}>Virtual tour</Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View style={style.detailsContainer}>
@@ -44,20 +68,27 @@ const Details = ({ route }) => {
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(_, key) => key.toString()}
-            data={house.interiors}
-            renderItem={({ item }) => <InteriorCard interior={item} />}
+            data={house.attributes.images.data}
+            renderItem={(item) => <InteriorCard item={item} />}
           />
 
           <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
+            style={{ flexDirection: "column", justifyContent: "space-between" }}
           >
             <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-              {house.title}
+              {house.attributes.name}
             </Text>
           </View>
+          <Text style={{ fontSize: 20, fontWeight: "bold", color: "#444" }}>
+            {house.attributes.short_description}
+          </Text>
 
           <Text style={{ fontSize: 16, color: COLORS.grey }}>
-            {house.location}
+            {house.attributes.address}
+          </Text>
+
+          <Text style={{ fontSize: 16, color: COLORS.grey }}>
+            {house.attributes.city} {""} {house.attributes.state}
           </Text>
 
           <View style={{ flexDirection: "row", marginTop: 20 }}>
