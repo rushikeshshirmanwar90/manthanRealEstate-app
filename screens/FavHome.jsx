@@ -18,7 +18,7 @@ import url from "../components/route/api";
 
 const { width } = Dimensions.get("screen");
 
-const HomeScreen = () => {
+const FavHome = () => {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState(null); // State to track the active filter button
@@ -82,47 +82,10 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
-      <StatusBar
-        translucent={false}
-        backgroundColor={COLORS.white}
-        barStyle="dark-content"
-      />
+     
+     <View style={{ marginTop : 40 }} >
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          paddingHorizontal: 20,
-          marginTop: 20,
-        }}
-      >
-        <View style={style.searchInputContainer}>
-          <Icon name="search" color={COLORS.grey} size={25} />
-          <TextInput placeholder="Search address, city, location" />
-        </View>
-      </View>
-
-      <View style={style.filterBtnBox}>
-        {filters.map((filter) => (
-          <Pressable
-            key={filter}
-            onPress={() => setActiveFilter(filter)}
-            style={[
-              style.filterBtn,
-              activeFilter === filter && style.activeFilterBtn,
-            ]}
-          >
-            <Text
-              style={[
-                style.filterBtnText,
-                activeFilter === filter && style.activeFilterBtnText,
-              ]}
-            >
-              {filter}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
+     </View>
 
       <FlatList
         snapToInterval={width - 20}
@@ -131,10 +94,11 @@ const HomeScreen = () => {
         data={flats}
         renderItem={({ item }) => <Card house={item} />}
       />
-      
     </SafeAreaView>
   );
 };
+
+export default FavHome;
 
 const style = StyleSheet.create({
   filterBtnBox: {
@@ -248,5 +212,3 @@ const style = StyleSheet.create({
   facility: { flexDirection: "row", marginRight: 15 },
   facilityText: { marginLeft: 5, color: COLORS.grey },
 });
-
-export default HomeScreen;

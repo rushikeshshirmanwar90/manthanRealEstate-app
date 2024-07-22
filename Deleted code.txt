@@ -1,0 +1,43 @@
+  // FUNCTION FOR ADDING THE FLAT TO THE FAVORITE
+  const addFav = async (houseId, userId) => {
+    try {
+      const res = await fetch(`${url}/api/favs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            user: String(userId),
+            flat_id: String(houseId),
+          },
+        }),
+      });
+
+      const data = await res.json();
+      setLikeId(data.data.id);
+
+      Alert.alert("Added To Your favorites list Successfully");
+      setIsLiked(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // FUNCTION FOR REMOVING THE FLAT TO THE FAVORITE
+  const removeFav = async (id) => {
+    try {
+      console.log(`----${id}----`);
+      const res = fetch(`${url}/api/favs/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        Alert.alert("something went wrong");
+      } else {
+        Alert.alert("removed successfully");
+      }
+    } catch (error) {
+      console.log("something went wrong");
+    }
+  };

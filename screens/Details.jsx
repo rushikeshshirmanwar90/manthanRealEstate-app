@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ImageBackground,
   SafeAreaView,
@@ -12,24 +12,62 @@ import {
   Pressable,
   Linking,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { auth } from "../firebase/config";
 import COLORS from "../components/consts/colors";
+import url from "../components/route/api";
+import Icon from "react-native-vector-icons/FontAwesome";
+
+// importing components
+import Model from "../components/Model";
 
 const { width } = Dimensions.get("screen");
 
 const Details = ({ route }) => {
   const house = route.params;
+  const [userType, setUserType] = useState("");
+
+  // Loading States
+  const [loading, setLoading] = useState(true);
+  const [userTypeLoading, setUserTypeLoading] = useState(true);
+  const [userName, setUserName] = useState("");
 
   const [mainHouse, setMainHouse] = useState(
     house.attributes.images.data[0].attributes.url
   );
 
-  const handlePress = () => {
-    Linking.openURL(house.attributes.yt_link);
-  };
+  const [userId, setUserId] = useState("");
 
+  // GETTING USER-ID
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        const userId = user.uid;
+        setUserId(userId);
+        setLoading(false);
+      }
+    });
+    return unsubscribe;
+  }, [userId, loading]);
+
+  // GETTING THE USER-TYPE
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetch(
+        `${url}/api/user-ids?filters[$and][0][userId][$eq]=${userId}`
+      );
+      const data = await res.json();
+      const tmpUserType = data.data[0].attributes.user_type;
+      const tmpUserName = data.data[0].attributes.name;
+      setUserType(tmpUserType);
+      setUserName(tmpUserName);
+      setUserTypeLoading(false);
+    };
+    getData();
+  }, [userId, userTypeLoading, userType, userName]);
+
+  // COMPONENT FOR THE SMALL IMAGES
   const InteriorCard = ({ item }) => {
     return (
       <Pressable
@@ -45,6 +83,58 @@ const Details = ({ route }) => {
     );
   };
 
+  // FUNCTION TO ADD LEADS
+  const addLead = async (userId, houseId) => {
+    try {
+      const res = await fetch(`${url}/api/leads`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            user_id: String(userId),
+            flat_id: String(houseId),
+          },
+        }),
+      });
+
+      if (!res.ok) {
+        console.log("something went wrong");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // FUNCTION TO WHATSAPP MESSAGE
+  const handleWhatsAppPress = async () => {
+    try {
+      await addLead(userId, house.id);
+      const url = "whatsapp://send?phone=9579896842&text=hello";
+      Linking.openURL(url).catch(() => {
+        Alert.alert("Make sure WhatsApp is installed on your device");
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  // FUNCTION TO CALL
+  const handleCallPress = async () => {
+    try {
+      await addLead(userId, house.id);
+      Linking.openURL("tel:+919370789436");
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
+  // FUNCTION TO OPEN YOUTUBE
+  const handleYTPress = () => {
+    Linking.openURL(house.attributes.yt_link);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -54,7 +144,7 @@ const Details = ({ route }) => {
             source={{ uri: mainHouse }}
           ></ImageBackground>
 
-          <TouchableOpacity onPress={handlePress}>
+          <TouchableOpacity onPress={handleYTPress}>
             <View style={style.virtualTag}>
               <Text style={{ color: "white" }}>Virtual tour</Text>
             </View>
@@ -62,7 +152,6 @@ const Details = ({ route }) => {
         </View>
 
         <View style={style.detailsContainer}>
-          {/* Interior list */}
           <FlatList
             contentContainerStyle={{ marginTop: 20, marginBottom: 20 }}
             horizontal
@@ -79,9 +168,6 @@ const Details = ({ route }) => {
               {house.attributes.name}
             </Text>
           </View>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "#444" }}>
-            {house.attributes.short_description}
-          </Text>
 
           <Text style={{ fontSize: 16, color: COLORS.grey }}>
             {house.attributes.address}
@@ -91,20 +177,21 @@ const Details = ({ route }) => {
             {house.attributes.city} {""} {house.attributes.state}
           </Text>
 
+          <Text style={{ fontSize: 18, color: COLORS.dark, marginTop: 5 }}>
+            {house.attributes.description}
+          </Text>
+
           <View style={{ flexDirection: "row", marginTop: 20 }}>
             <View style={style.facility}>
               <Icon name="hotel" size={18} />
-              <Text style={style.facilityText}>2</Text>
+              <Text style={style.facilityText}>{house.attributes.BHK}BHK</Text>
             </View>
 
             <View style={style.facility}>
-              <Icon name="bathtub" size={18} />
-              <Text style={style.facilityText}>2</Text>
-            </View>
-
-            <View style={style.facility}>
-              <Icon name="aspect-ratio" size={18} />
-              <Text style={style.facilityText}>100m area</Text>
+              <Icon name="expand" size={18} />
+              <Text style={style.facilityText}>
+                {house.attributes.area} SQT
+              </Text>
             </View>
           </View>
 
@@ -112,14 +199,29 @@ const Details = ({ route }) => {
             {house.details}
           </Text>
 
-          {/* footer container */}
-          <View style={[style.footer]}>
-            <View style={[style.bookNowBtn, { flex: 1 }]}>
-              <Text style={{ color: COLORS.white, fontSize: 18 }}>
-                Book Now
-              </Text>
+          {userType !== "broker" ? (
+            <View style={style.container}>
+              <TouchableOpacity
+                style={style.button}
+                onPress={handleWhatsAppPress}
+              >
+                <Icon name="whatsapp" size={20} color="#fff" />
+                <Text style={style.buttonText}>WhatsApp Message</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={style.button} onPress={handleCallPress}>
+                <Icon name="phone" size={20} color="#fff" />
+                <Text style={style.buttonText}>Call Us Now</Text>
+              </TouchableOpacity>
             </View>
-          </View>
+          ) : (
+            <View>
+              <Model
+                brokerName={userName}
+                flatId={house.id}
+                brokerId={userId}
+              />
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -199,6 +301,26 @@ const style = StyleSheet.create({
   detailsContainer: { flex: 1, paddingHorizontal: 20, marginTop: 40 },
   facility: { flexDirection: "row", marginRight: 15 },
   facilityText: { marginLeft: 5, color: COLORS.grey },
+
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginTop: 1,
+    marginBottom: 10,
+  },
+
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#25D366", // WhatsApp green color
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    marginLeft: 10,
+  },
 });
 
 export default Details;

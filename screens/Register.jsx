@@ -29,39 +29,17 @@ const Index = () => {
 
   const handleRegister = async () => {
     if (email !== "" && password !== "") {
-
       try {
-        const res = await fetch(
-          `${url}/api/user-ids`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              data: {
-                name: name,
-                phone: number,
-                mail: email,
-                user_type: loginType,
-              },
-            }),
-          }
-        );
-
-        console.log("Fetch response received");
-
-        if (!res.ok) {
-          const errorText = await res.text();
-          throw new Error(`Failed to fetch: ${errorText}`);
-        }
-
         console.log("Creating user with email and password");
+
+        let userId = "";
 
         await createUserWithEmailAndPassword(auth, email, password)
           .then((result) => {
             const user = result.user;
             console.log("User created:", user.email);
+            console.log("Details: ", user.uid);
+            userId = user.uid;
             navigation.replace("Home");
           })
 
@@ -69,7 +47,29 @@ const Index = () => {
             console.error("Error creating user:", err);
             alert(`Error creating user: ${err.message}`);
           });
-          
+
+        const res = await fetch(`${url}/api/user-ids`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: {
+              name: name,
+              phone: number,
+              mail: email,
+              user_type: loginType,
+              userId: userId,
+            },
+          }),
+        });
+
+        console.log("Fetch response received");
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(`Failed to fetch: ${errorText}`);
+        }
       } catch (error) {
         console.error("Error during registration:", error);
         alert(`Registration failed: ${error.message}`);
