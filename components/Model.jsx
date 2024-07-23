@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Modal,
   StyleSheet,
   TouchableOpacity,
@@ -12,7 +11,7 @@ import {
 } from "react-native";
 import url from "./route/api";
 
-const Model = ({ brokerName, brokerId, flatId }) => {
+const Model = ({ brokerName, brokerId, flatId, flatName }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState("");
   const [number, setNumber] = useState();
@@ -34,20 +33,15 @@ const Model = ({ brokerName, brokerId, flatId }) => {
         },
         body: JSON.stringify({
           data: {
-            brokerId: brokerId,
+            brokerId: String(brokerId),
             flatId: String(flatId),
             brokerName: brokerName,
             leadName: name,
             leadNumber: number,
+            flat_name: flatName,
           },
         }),
       });
-
-      console.log(brokerId);
-      console.log(flatId);
-      console.log(brokerName);
-      console.log(name);
-      console.log(number);
 
       if (res.ok) {
         Alert.alert("Your send successfully");
@@ -57,6 +51,9 @@ const Model = ({ brokerName, brokerId, flatId }) => {
     } catch (error) {
       console.log(error.message);
     }
+
+    setName("");
+    setName();
 
     handleCloseModal();
   };
@@ -113,6 +110,7 @@ const Model = ({ brokerName, brokerId, flatId }) => {
 
 export default Model;
 
+// STYLING
 const styles = StyleSheet.create({
   container: {
     flex: 1,

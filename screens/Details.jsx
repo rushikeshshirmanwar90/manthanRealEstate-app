@@ -38,6 +38,7 @@ const Details = ({ route }) => {
   );
 
   const [userId, setUserId] = useState("");
+  const [userRawId, setUserRawId] = useState("");
 
   // GETTING USER-ID
   useEffect(() => {
@@ -51,7 +52,7 @@ const Details = ({ route }) => {
     return unsubscribe;
   }, [userId, loading]);
 
-  // GETTING THE USER-TYPE
+  // GETTING THE USER-INFO
   useEffect(() => {
     const getData = async () => {
       const res = await fetch(
@@ -60,10 +61,13 @@ const Details = ({ route }) => {
       const data = await res.json();
       const tmpUserType = data.data[0].attributes.user_type;
       const tmpUserName = data.data[0].attributes.name;
+      const tmpUserRawId = data.data[0].id;
+      setUserRawId(tmpUserRawId);
       setUserType(tmpUserType);
       setUserName(tmpUserName);
       setUserTypeLoading(false);
     };
+
     getData();
   }, [userId, userTypeLoading, userType, userName]);
 
@@ -84,7 +88,7 @@ const Details = ({ route }) => {
   };
 
   // FUNCTION TO ADD LEADS
-  const addLead = async (userId, houseId) => {
+  const addLead = async (userId, houseId, userName, flatName) => {
     try {
       const res = await fetch(`${url}/api/leads`, {
         method: "POST",
@@ -95,6 +99,8 @@ const Details = ({ route }) => {
           data: {
             user_id: String(userId),
             flat_id: String(houseId),
+            user_name: userName,
+            flat_name: flatName,
           },
         }),
       });
@@ -110,7 +116,7 @@ const Details = ({ route }) => {
   // FUNCTION TO WHATSAPP MESSAGE
   const handleWhatsAppPress = async () => {
     try {
-      await addLead(userId, house.id);
+      await addLead(userRawId, house.id, userName, house.attributes.name);
       const url = "whatsapp://send?phone=9579896842&text=hello";
       Linking.openURL(url).catch(() => {
         Alert.alert("Make sure WhatsApp is installed on your device");
@@ -123,8 +129,8 @@ const Details = ({ route }) => {
   // FUNCTION TO CALL
   const handleCallPress = async () => {
     try {
-      await addLead(userId, house.id);
-      Linking.openURL("tel:+919370789436");
+      await addLead(userId, house.id, userName, house.attributes.name);
+      Linking.openURL("tel:+919579896842");
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -199,10 +205,10 @@ const Details = ({ route }) => {
             {house.details}
           </Text>
 
-          {userType !== "broker" ? (
+          {userType == "broker" ? (
             <View style={style.container}>
               <TouchableOpacity
-                style={style.button}
+                style={[style.button, { padding: 10 }]}
                 onPress={handleWhatsAppPress}
               >
                 <Icon name="whatsapp" size={20} color="#fff" />
@@ -218,7 +224,8 @@ const Details = ({ route }) => {
               <Model
                 brokerName={userName}
                 flatId={house.id}
-                brokerId={userId}
+                brokerId={userRawId}
+                flatName={house.attributes.name}
               />
             </View>
           )}
@@ -228,6 +235,7 @@ const Details = ({ route }) => {
   );
 };
 
+// STYLING
 const style = StyleSheet.create({
   backgroundImageContainer: {
     elevation: 20,
@@ -312,14 +320,17 @@ const style = StyleSheet.create({
 
   button: {
     flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#25D366", // WhatsApp green color
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    backgroundColor: "#111",
     padding: 10,
     borderRadius: 5,
   },
+
   buttonText: {
     color: "#fff",
     marginLeft: 10,
+    paddingHorizontal: 5,
   },
 });
 

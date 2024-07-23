@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // Components
-import HomeScreen from "./screens/Home";
+import HomeScreen from "./screens/ComplitedProject";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import OnBoardScreen from "./screens/onBording";
