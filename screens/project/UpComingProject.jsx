@@ -12,9 +12,9 @@ import {
   Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import COLORS from "../components/consts/colors";
+import COLORS from "../../components/consts/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import url from "../components/route/api";
+import url from "../../components/route/api";
 
 const { width } = Dimensions.get("screen");
 
@@ -26,7 +26,7 @@ const UpComingProject = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await fetch(`${url}/api/flats?populate=*`);
+      const res = await fetch(`${url}/api/flats?populate=*&filters[$and][0][project_type][$eq]=Upcoming%20Project`);
       const data = await res.json();
       setFlats(data.data);
       setLoading(false);
@@ -131,7 +131,6 @@ const UpComingProject = () => {
         data={flats}
         renderItem={({ item }) => <Card house={item} />}
       />
-      
     </SafeAreaView>
   );
 };

@@ -4,7 +4,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // Components
-import HomeScreen from "./screens/ComplitedProject";
+import CompletedProject from "./screens/project/CompletedProject";
+import OnGoingProject from "./screens/project/OnGoingProject";
+import UpComingProject from "./screens/project/UpComingProject";
+
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import OnBoardScreen from "./screens/onBording";
@@ -33,8 +36,9 @@ function HomeDrawer() {
         headerTintColor: "#222",
       }}
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Fav" component={FavHome} />
+      <Drawer.Screen name="Completed Project" component={CompletedProject} />
+      <Drawer.Screen name="UpComing Project" component={UpComingProject} />
+      <Drawer.Screen name="OnGoing Project" component={OnGoingProject} />
     </Drawer.Navigator>
   );
 }

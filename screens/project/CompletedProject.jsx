@@ -12,13 +12,13 @@ import {
   Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import COLORS from "../components/consts/colors";
+import COLORS from "../../components/consts/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import url from "../components/route/api";
+import url from "../../components/route/api";
 
 const { width } = Dimensions.get("screen");
 
-const HomeScreen = () => {
+const CompletedProject = () => {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState(null); // State to track the active filter button
@@ -26,7 +26,9 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await fetch(`${url}/api/flats?populate=*`);
+      const res = await fetch(
+        `${url}/api/flats?populate=*&filters[$and][0][project_type][$eq]=Completed%20Project`
+      );
       const data = await res.json();
       setFlats(data.data);
       setLoading(false);
@@ -131,7 +133,6 @@ const HomeScreen = () => {
         data={flats}
         renderItem={({ item }) => <Card house={item} />}
       />
-      
     </SafeAreaView>
   );
 };
@@ -249,4 +250,4 @@ const style = StyleSheet.create({
   facilityText: { marginLeft: 5, color: COLORS.grey },
 });
 
-export default HomeScreen;
+export default CompletedProject;

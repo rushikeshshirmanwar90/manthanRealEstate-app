@@ -56,7 +56,7 @@ const Index = () => {
           body: JSON.stringify({
             data: {
               name: name,
-              phone: number,
+              number: number,
               mail: email,
               user_type: loginType,
               userId: userId,
@@ -191,7 +191,6 @@ const Index = () => {
                       value="user"
                     />
                     <Picker.Item label="I am a broker" value="broker" />
-                    <Picker.Item label="admin" value="admin" />
                   </Picker>
                 </View>
               </View>

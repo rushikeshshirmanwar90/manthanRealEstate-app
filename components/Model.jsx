@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import url from "./route/api";
 
-const Model = ({ brokerName, brokerId, flatId, flatName }) => {
+const Model = ({ userName, userId, flatId, flatName, addLead }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState("");
   const [number, setNumber] = useState();
@@ -26,22 +26,14 @@ const Model = ({ brokerName, brokerId, flatId, flatName }) => {
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch(`${url}/api/broker-leads`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: {
-            brokerId: String(brokerId),
-            flatId: String(flatId),
-            brokerName: brokerName,
-            leadName: name,
-            leadNumber: number,
-            flat_name: flatName,
-          },
-        }),
-      });
+      const res = await addLead(
+        userId,
+        flatId,
+        name,
+        flatName,
+        number,
+        userName
+      );
 
       if (res.ok) {
         Alert.alert("Your send successfully");
@@ -53,7 +45,7 @@ const Model = ({ brokerName, brokerId, flatId, flatName }) => {
     }
 
     setName("");
-    setName();
+    setName(null);
 
     handleCloseModal();
   };

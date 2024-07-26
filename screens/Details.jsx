@@ -26,12 +26,15 @@ const { width } = Dimensions.get("screen");
 
 const Details = ({ route }) => {
   const house = route.params;
+
+  // USER INFORMATION STATES
   const [userType, setUserType] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userPhoneNumber, setUserPhoneNumber] = useState();
 
   // Loading States
   const [loading, setLoading] = useState(true);
   const [userTypeLoading, setUserTypeLoading] = useState(true);
-  const [userName, setUserName] = useState("");
 
   const [mainHouse, setMainHouse] = useState(
     house.attributes.images.data[0].attributes.url
@@ -61,10 +64,12 @@ const Details = ({ route }) => {
       const data = await res.json();
       const tmpUserType = data.data[0].attributes.user_type;
       const tmpUserName = data.data[0].attributes.name;
+      const tmpUserPhoneNumber = data.data[0].attributes.number;
       const tmpUserRawId = data.data[0].id;
       setUserRawId(tmpUserRawId);
       setUserType(tmpUserType);
       setUserName(tmpUserName);
+      setUserPhoneNumber(tmpUserPhoneNumber);
       setUserTypeLoading(false);
     };
 
@@ -88,7 +93,14 @@ const Details = ({ route }) => {
   };
 
   // FUNCTION TO ADD LEADS
-  const addLead = async (userId, houseId, userName, flatName) => {
+  const addLead = async (
+    userId,
+    houseId,
+    userName,
+    flatName,
+    phoneNumber,
+    partner
+  ) => {
     try {
       const res = await fetch(`${url}/api/leads`, {
         method: "POST",
@@ -101,6 +113,8 @@ const Details = ({ route }) => {
             flat_id: String(houseId),
             user_name: userName,
             flat_name: flatName,
+            phone_number: String(phoneNumber),
+            channel_partner: partner,
           },
         }),
       });
@@ -108,6 +122,7 @@ const Details = ({ route }) => {
       if (!res.ok) {
         console.log("something went wrong");
       }
+      return res;
     } catch (error) {
       console.log(error.message);
     }
@@ -116,8 +131,21 @@ const Details = ({ route }) => {
   // FUNCTION TO WHATSAPP MESSAGE
   const handleWhatsAppPress = async () => {
     try {
-      await addLead(userRawId, house.id, userName, house.attributes.name);
-      const url = "whatsapp://send?phone=9579896842&text=hello";
+      await addLead(
+        userRawId,
+        house.id,
+        userName,
+        house.attributes.name,
+        userPhoneNumber,
+        "SELF"
+      );
+      const url = `whatsapp://send?phone=9579896842&text=Hey There i am ${userName} and i am interested in your Flat 
+      \n
+      ${house.attributes.name} \n
+      ${house.attributes.address} \n
+      ${house.attributes.city} \n
+      ${house.attributes.state} \n
+      `;
       Linking.openURL(url).catch(() => {
         Alert.alert("Make sure WhatsApp is installed on your device");
       });
@@ -129,7 +157,14 @@ const Details = ({ route }) => {
   // FUNCTION TO CALL
   const handleCallPress = async () => {
     try {
-      await addLead(userId, house.id, userName, house.attributes.name);
+      await addLead(
+        userId,
+        house.id,
+        userName,
+        house.attributes.name,
+        userPhoneNumber,
+        "SELF"
+      );
       Linking.openURL("tel:+919579896842");
     } catch (error) {
       Alert.alert(error.message);
@@ -222,10 +257,11 @@ const Details = ({ route }) => {
           ) : (
             <View>
               <Model
-                brokerName={userName}
+                userName={userName}
                 flatId={house.id}
-                brokerId={userRawId}
+                userId={userRawId}
                 flatName={house.attributes.name}
+                addLead={addLead()}
               />
             </View>
           )}
