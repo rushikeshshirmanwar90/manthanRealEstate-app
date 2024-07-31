@@ -9,7 +9,6 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import url from "./route/api";
 
 const Model = ({ userName, userId, flatId, flatName, addLead }) => {
   const [modalVisible, setModalVisible] = useState(false);

@@ -25,6 +25,7 @@ import Model from "../components/Model";
 const { width } = Dimensions.get("screen");
 
 const Details = ({ route }) => {
+  
   const house = route.params;
 
   // USER INFORMATION STATES
@@ -84,10 +85,12 @@ const Details = ({ route }) => {
           setMainHouse(item.item.attributes.formats.medium.url);
         }}
       >
+
         <Image
           source={{ uri: item.item.attributes.formats.medium.url }}
           style={style.interiorImage}
         />
+        
       </Pressable>
     );
   };
