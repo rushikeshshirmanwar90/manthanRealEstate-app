@@ -99,6 +99,7 @@ export const style = StyleSheet.create({
     marginTop: 40,
     paddingHorizontal: 40,
   },
+  
   card: {
     height: 250,
     backgroundColor: COLORS.white,

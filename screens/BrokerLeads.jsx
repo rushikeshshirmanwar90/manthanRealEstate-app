@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import List from "../components/List";
 
 const BrokerLeads = () => {
   return (
     <View>
-      <Text>Hello, This is BrokerLeads Page</Text>
+      <List />
     </View>
   );
 };

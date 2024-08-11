@@ -22,6 +22,7 @@ const Card = ({ house }) => {
           }}
           style={style.cardImage}
         />
+
         <View style={{ marginTop: 10 }}>
           <View
             style={{
@@ -48,6 +49,7 @@ const Card = ({ house }) => {
             </View>
           </View>
         </View>
+        
       </View>
     </Pressable>
   );

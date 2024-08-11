@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
-import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer"; // Ensure DrawerItem is imported
 import { useNavigation } from "@react-navigation/core";
 
 import { auth } from "../firebase/config"; // Ensure this path matches your project structure
 import url from "./route/api"; // Ensure this path matches your project structure
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CustomDrawer = (props) => {
   const navigation = useNavigation();
 
   const [userType, setUserType] = useState("");
   const [userName, setUserName] = useState("Rushikesh Shrimanwar");
-  const [userPhoneNumber, setUserPhoneNumber] = useState();
   const [userId, setUserId] = useState("");
-  const [userRawId, setUserRawId] = useState("");
 
   // Loading States
   const [loading, setLoading] = useState(true);
-  const [userTypeLoading, setUserTypeLoading] = useState(true);
 
   // Function to store userType in AsyncStorage
-  const storeUserType = async (type) => {
+  const storeUserType = async (name, value) => {
     try {
-      await AsyncStorage.setItem('@user_type', type);
+      await AsyncStorage.setItem(name, value);
     } catch (e) {
       console.error(e);
     }
   };
 
-  // GETTING USER-ID
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -43,24 +43,19 @@ const CustomDrawer = (props) => {
     return unsubscribe;
   }, []);
 
-  // GETTING THE USER-INFO
   useEffect(() => {
     const getData = async () => {
       if (!userId) return;
       try {
-        const res = await fetch(`${url}/api/user-ids?filters[$and][0][userId][$eq]=${userId}`);
+        const res = await fetch(
+          `${url}/api/user-ids?filters[$and][0][userId][$eq]=${userId}`
+        );
         const data = await res.json();
         const tmpUserType = data.data[0]?.attributes?.user_type || "";
-        const tmpUserName = data.data[0]?.attributes?.name || "";
-        const tmpUserPhoneNumber = data.data[0]?.attributes?.number || "";
-        const tmpUserRawId = data.data[0]?.id || "";
-
-        setUserRawId(tmpUserRawId);
+        const userName = data.data[0]?.attributes.name || "";
         setUserType(tmpUserType);
-        await storeUserType(tmpUserType); // Store userType in AsyncStorage
-        setUserName(tmpUserName);
-        setUserPhoneNumber(tmpUserPhoneNumber);
-        setUserTypeLoading(false);
+        await storeUserType("@user_type", tmpUserType);
+        await storeUserType("@user_name", userName);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -69,7 +64,7 @@ const CustomDrawer = (props) => {
     getData();
   }, [userId]);
 
-  if (loading || userTypeLoading) {
+  if (loading) {
     return null; // Consider showing a loading spinner here
   }
 
@@ -79,24 +74,37 @@ const CustomDrawer = (props) => {
         <Text style={styles.greeting}>Hello, {userName}</Text>
       </View>
 
-      <DrawerItemList {...props} />
+      {/* Conditionally render DrawerItemList based on userType */}
+      {userType !== "staff" && <DrawerItemList {...props} />}
 
       {/* Conditional rendering based on userType */}
+      
       {userType === "staff" ? (
-        <DrawerItem label="My Assign Leads" onPress={() => navigation.navigate('YourScreenNameForStaff')} />
-      ) : userType === "broker" ? (
-        <DrawerItem label="My Leads" onPress={() => navigation.navigate('YourScreenNameForBroker')} />
+        <DrawerItem
+          label="My Assign Leads"
+          onPress={() => navigation.navigate("Assign Leads")}
+        />
       ) : null}
+
+      {/* {userType === "broker" ? (
+        <DrawerItem
+          label="My Leads"
+          onPress={() => navigation.navigate("My leads")}
+        />
+      ) : null} */}
 
       <View style={styles.signOutContainer}>
         <Button
           title="Sign Out"
           onPress={() => {
-            auth.signOut().then(() => {
-              navigation.replace("Login");
-            }).catch(() => {
-              alert("Something went wrong");
-            });
+            auth
+              .signOut()
+              .then(() => {
+                navigation.replace("Login");
+              })
+              .catch(() => {
+                alert("Something went wrong");
+              });
           }}
           color="#ff0000"
         />

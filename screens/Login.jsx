@@ -4,7 +4,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  Image,
   TouchableOpacity,
   TextInput,
 } from "react-native";

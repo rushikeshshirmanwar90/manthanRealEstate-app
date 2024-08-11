@@ -1,14 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { View } from "react-native";
+import React from "react";
+import List from "../components/List";
 
 const StaffLeads = () => {
   return (
     <View>
-      <Text>Hello, This StaffLeads Page</Text>
+      <List />
     </View>
-  )
-}
+  );
+};
 
-export default StaffLeads
-
-const styles = StyleSheet.create({})
+export default StaffLeads;

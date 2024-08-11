@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+
 import { auth } from "../firebase/config";
 import COLORS from "../components/consts/colors";
 import url from "../components/route/api";
@@ -243,7 +244,7 @@ const Details = ({ route }) => {
             {house.details}
           </Text>
 
-          {userType == "broker" ? (
+          {userType !== "broker" ? (
             <View style={style.container}>
               <TouchableOpacity
                 style={[style.button, { padding: 10 }]}

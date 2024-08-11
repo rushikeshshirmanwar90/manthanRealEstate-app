@@ -104,7 +104,7 @@ function HomeDrawer() {
       <Drawer.Screen name="UpComing Project" component={UpComingProject} />
       <Drawer.Screen name="OnGoing Project" component={OnGoingProject} />
       {userType === "broker" && (
-        <Drawer.Screen name="My Leads" component={MyLeads} />
+        <Drawer.Screen name="My Leads" component={BrokerLeads} />
       )}
     </Drawer.Navigator>
   );

@@ -22,8 +22,7 @@ const { width } = Dimensions.get("screen");
 const Flats = (projectName) => {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeFilter, setActiveFilter] = useState(null);
-  const navigation = useNavigation();
+
 
   const name = projectName.route.params;
 
@@ -39,40 +38,16 @@ const Flats = (projectName) => {
     getData();
   }, [loading]);
 
-  const filters = ["1BHK", "2BHK", "3BHK"];
-
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+
+
 
       <StatusBar
         translucent={false}
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
-
-      <View style={style.filterBtnBox}>
-        {filters.map((filter) => (
-          <Pressable
-            key={filter}
-            onPress={() => setActiveFilter(filter)}
-            style={[
-              style.filterBtn,
-              activeFilter === filter && style.activeFilterBtn,
-            ]}
-          >
-            <Text
-              style={[
-                style.filterBtnText,
-                activeFilter === filter && style.activeFilterBtnText,
-              ]}
-            >
-
-              {filter}
-            </Text>
-          </Pressable>
-          
-        ))}
-      </View>
 
       <FlatList
         snapToInterval={width - 20}
