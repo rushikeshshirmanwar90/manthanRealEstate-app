@@ -27,7 +27,10 @@ const Flats = (projectName) => {
       );
       const data = await res.json();
       setFlats(data.data);
-      console.log(data.data)
+      console.log(
+        data.data[0].attributes.images.data[0].attributes.formats.medium.url
+      );
+      setImages(data.data[0].attributes.images.data);
       setLoading(false);
     };
     getData();
@@ -41,10 +44,9 @@ const Flats = (projectName) => {
         barStyle="dark-content"
       />
       <View style={{ flex: 1 }}>
-        
         <View style={{ height: "40%" }}>
-          <Swiper />
-        </View> 
+          <Swiper images={images} />
+        </View>
         <View style={{ flex: 1, marginTop: 45 }}>
           <FlatList
             snapToInterval={width - 20}

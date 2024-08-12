@@ -18,11 +18,9 @@ import img5 from "../assets/Manthan Pride extrior images/01_5 - Photo.jpg";
 import img6 from "../assets/Manthan Pride extrior images/01_6 - Photo.jpg";
 import img7 from "../assets/Manthan Pride extrior images/01_7 - Photo.jpg";
 
-const images = [img1, img2, img3, img4, img5, img6, img7];
-
 const { width, height } = Dimensions.get("window");
 
-const App = () => (
+const App = ({ images }) => (
   <View style={{ flex: 1 }}>
     <View style={styles.swiperContainer}>
       <SwiperFlatList
@@ -37,7 +35,10 @@ const App = () => (
         data={images}
         renderItem={({ item }) => (
           <View style={styles.child}>
-            <Image source={item} style={styles.image} />
+            <Image
+              source={{ uri: item.attributes.formats.medium.url }}
+              style={styles.image}
+            />
           </View>
         )}
       />
