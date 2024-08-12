@@ -3,26 +3,20 @@ import {
   SafeAreaView,
   View,
   StatusBar,
-  Text,
-  TextInput,
   FlatList,
   Dimensions,
-  Pressable,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import COLORS from "../components/consts/colors";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import url from "../components/route/api";
-
-import { style } from "../styles/project";
 import Card from "../components/Cards";
+import Swiper from "../components/swiper";
 
 const { width } = Dimensions.get("screen");
 
 const Flats = (projectName) => {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [images, setImages] = useState([]);
 
   const name = projectName.route.params;
 
@@ -33,6 +27,7 @@ const Flats = (projectName) => {
       );
       const data = await res.json();
       setFlats(data.data);
+      console.log(data.data)
       setLoading(false);
     };
     getData();
@@ -40,22 +35,26 @@ const Flats = (projectName) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
-
-
-
       <StatusBar
         translucent={false}
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
-
-      <FlatList
-        snapToInterval={width - 20}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
-        data={flats}
-        renderItem={({ item }) => <Card house={item} />}
-      />
+      <View style={{ flex: 1 }}>
+        
+        <View style={{ height: "40%" }}>
+          <Swiper />
+        </View> 
+        <View style={{ flex: 1, marginTop: 45 }}>
+          <FlatList
+            snapToInterval={width - 20}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
+            data={flats}
+            renderItem={({ item }) => <Card house={item} />}
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };

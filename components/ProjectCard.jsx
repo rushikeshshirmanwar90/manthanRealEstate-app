@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../components/consts/colors";
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 // IMPORTING STYLES
 import { style } from "../styles/project";
@@ -11,7 +10,7 @@ const ProjectCard = ({ project }) => {
   const navigation = useNavigation();
 
   const img =
-    project.attributes.projectImage.data.attributes.formats.medium.url;
+    project.attributes.projectImage.data[0].attributes.formats.medium.url;
 
   const name = project.attributes.projectName;
 
@@ -54,7 +53,3 @@ const ProjectCard = ({ project }) => {
 };
 
 export default ProjectCard;
-
-/* 
-
-*/

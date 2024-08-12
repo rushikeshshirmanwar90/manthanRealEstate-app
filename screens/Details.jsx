@@ -26,7 +26,6 @@ import Model from "../components/Model";
 const { width } = Dimensions.get("screen");
 
 const Details = ({ route }) => {
-  
   const house = route.params;
 
   // USER INFORMATION STATES
@@ -86,12 +85,10 @@ const Details = ({ route }) => {
           setMainHouse(item.item.attributes.formats.medium.url);
         }}
       >
-
         <Image
           source={{ uri: item.item.attributes.formats.medium.url }}
           style={style.interiorImage}
         />
-        
       </Pressable>
     );
   };
@@ -244,14 +241,14 @@ const Details = ({ route }) => {
             {house.details}
           </Text>
 
-          {userType !== "broker" ? (
+          {userType == "broker" ? (
             <View style={style.container}>
               <TouchableOpacity
-                style={[style.button, { padding: 10 }]}
+                style={[style.wButton, { padding: 10 }]}
                 onPress={handleWhatsAppPress}
               >
-                <Icon name="whatsapp" size={20} color="#fff" />
-                <Text style={style.buttonText}>WhatsApp Message</Text>
+                <Icon name="whatsapp" size={20} color="#00FF00" />
+                <Text style={style.wBtn}>WhatsApp Message</Text>
               </TouchableOpacity>
               <TouchableOpacity style={style.button} onPress={handleCallPress}>
                 <Icon name="phone" size={20} color="#fff" />
@@ -367,8 +364,22 @@ const style = StyleSheet.create({
     borderRadius: 5,
   },
 
+  wButton: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    padding: 10,
+    borderRadius: 5,
+  },
+
   buttonText: {
     color: "#fff",
+    marginLeft: 10,
+    paddingHorizontal: 5,
+  },
+
+  wBtn: {
+    color: "#00FF00",
     marginLeft: 10,
     paddingHorizontal: 5,
   },
