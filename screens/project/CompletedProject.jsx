@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StatusBar, FlatList, Dimensions, Text } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  FlatList,
+  Dimensions,
+  Text,
+} from "react-native";
 import COLORS from "../../components/consts/colors";
 import url from "../../components/route/api";
 
@@ -20,6 +26,7 @@ const CompletedProject = () => {
       const data = await res.json();
       setProjects(data.data);
       setLoading(false);
+      // console.log(data.data)
     };
     getData();
   }, [loading]);
@@ -31,14 +38,13 @@ const CompletedProject = () => {
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
-
       {projects.length !== 0 ? (
         <FlatList
           snapToInterval={width - 20}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
           data={projects}
-          renderItem={({ item }) => <ProjectCard project={item} />}
+          renderItem={({item}) => <ProjectCard project={item}/>}
         />
       ) : (
         <Text> There is No Coming Project </Text>

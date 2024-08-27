@@ -78,7 +78,7 @@ const CustomDrawer = (props) => {
       {userType !== "staff" && <DrawerItemList {...props} />}
 
       {/* Conditional rendering based on userType */}
-      
+
       {userType === "staff" ? (
         <DrawerItem
           label="My Assign Leads"
@@ -106,7 +106,7 @@ const CustomDrawer = (props) => {
                 alert("Something went wrong");
               });
           }}
-          color="#ff0000"
+          color="#111"
         />
       </View>
     </DrawerContentScrollView>

@@ -10,10 +10,11 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 31,
+    fontSize: 25,
     fontWeight: "700",
     color: "#1D2A32",
     marginBottom: 6,
+    textAlign: "center",
   },
 
   subtitle: {

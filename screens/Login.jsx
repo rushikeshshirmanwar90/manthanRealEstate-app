@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
+  Image,
 } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -13,8 +14,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { auth } from "../firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/core";
-
 import { styles } from "../styles/Login";
+
+import Logo from "../assets/logo.png";
 
 const Index = () => {
   const [email, setEmail] = useState("");
@@ -52,14 +54,17 @@ const Index = () => {
       <View style={styles.container}>
         <KeyboardAwareScrollView>
           <View style={styles.header}>
-            {/* <Image
+            <Image
               alt="App Logo"
               resizeMode="contain"
               style={styles.headerImg}
               source={Logo}
-            /> */}
+            />
             <Text style={styles.title}>
-              Login in to <Text style={{ color: "#075eec" }}>Manthan</Text>
+              Login in to{"\n"}
+              <Text style={{ color: "#50719E" }}>
+                Manthan Infracare Pvt.Ltd
+              </Text>
             </Text>
 
             <Text style={styles.subtitle}>

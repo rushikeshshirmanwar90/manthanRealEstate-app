@@ -4,19 +4,8 @@ import {
   Dimensions,
   StyleSheet,
   View,
-  StatusBar,
-  FlatList,
 } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
-
-// importing images
-import img1 from "../assets/Manthan Pride extrior images/01_1 - Photo.jpg";
-import img2 from "../assets/Manthan Pride extrior images/01_2 - Photo.jpg";
-import img3 from "../assets/Manthan Pride extrior images/01_3 - Photo.jpg";
-import img4 from "../assets/Manthan Pride extrior images/01_4 - Photo.jpg";
-import img5 from "../assets/Manthan Pride extrior images/01_5 - Photo.jpg";
-import img6 from "../assets/Manthan Pride extrior images/01_6 - Photo.jpg";
-import img7 from "../assets/Manthan Pride extrior images/01_7 - Photo.jpg";
 
 const { width, height } = Dimensions.get("window");
 
@@ -28,7 +17,7 @@ const App = ({ images }) => (
         autoplayDelay={2}
         autoplayLoop
         index={0}
-        paginationStyle={styles.paginationStyle} // Custom Pagination Style
+        paginationStyle={styles.paginationStyle} 
         paginationStyleItem={styles.paginationStyleItem}
         paginationActiveColor="#D6AA65"
         showPagination
@@ -39,6 +28,7 @@ const App = ({ images }) => (
               source={{ uri: item.attributes.formats.medium.url }}
               style={styles.image}
             />
+            
           </View>
         )}
       />
@@ -47,15 +37,18 @@ const App = ({ images }) => (
 );
 
 const styles = StyleSheet.create({
+
   swiperContainer: {
     marginVertical: 20,
     height: height * 0.4,
   },
+
   child: {
     width: width,
     justifyContent: "center",
     alignItems: "center",
   },
+
   image: {
     width: width * 0.9, // Adjust width as needed
     height: "100%", // Full height within the swiper container
@@ -71,6 +64,7 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "center",
   },
+
   paginationStyleItem: {
     width: 10,
     height: 10,
@@ -78,6 +72,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     backgroundColor: "#333", // Customize dot color
   },
+
 });
 
 export default App;

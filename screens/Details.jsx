@@ -241,13 +241,13 @@ const Details = ({ route }) => {
             {house.details}
           </Text>
 
-          {userType == "broker" ? (
+          {userType !== "broker" ? (
             <View style={style.container}>
               <TouchableOpacity
                 style={[style.wButton, { padding: 10 }]}
                 onPress={handleWhatsAppPress}
               >
-                <Icon name="whatsapp" size={20} color="#00FF00" />
+                <Icon name="whatsapp" size={20} color="#fff" />
                 <Text style={style.wBtn}>WhatsApp Message</Text>
               </TouchableOpacity>
               <TouchableOpacity style={style.button} onPress={handleCallPress}>
@@ -365,6 +365,7 @@ const style = StyleSheet.create({
   },
 
   wButton: {
+    backgroundColor: "#0ec40e",
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between",
@@ -379,9 +380,11 @@ const style = StyleSheet.create({
   },
 
   wBtn: {
-    color: "#00FF00",
+    color: "#fff",
     marginLeft: 10,
     paddingHorizontal: 5,
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
 

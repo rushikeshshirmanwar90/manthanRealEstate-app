@@ -12,12 +12,22 @@ const ProjectCard = ({ project }) => {
   const img =
     project.attributes.projectImage.data[0].attributes.formats.medium.url;
 
+  const imgData = project.attributes.projectImage.data;
+
+  console.log(imgData);
+
   const name = project.attributes.projectName;
+
+  const data = {
+    name: project.attributes.projectName,
+    address: project.attributes.address,
+    imgs: imgData,
+  };
 
   return (
     <Pressable
       style={({ pressed }) => [{ opacity: pressed ? 0.8 : 1 }]}
-      onPress={() => navigation.navigate("Flats", name)}
+      onPress={() => navigation.navigate("Flats", data)}
     >
       <View style={[style.card, { marginBottom: 20 }]}>
         <Image

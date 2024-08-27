@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 // IMPORTING STYLES
 // import { style } from "../styles/project";
 
-const Card = ({ house }) => {
+const Card = ({ house, address }) => {
   const navigation = useNavigation();
 
   return (
@@ -41,7 +41,8 @@ const Card = ({ house }) => {
               width: 200,
             }}
           >
-            {house.attributes.address}
+            
+            {address}
           </Text>
           <View style={{ marginTop: 10, flexDirection: "row" }}>
             <View style={style.facility}>
