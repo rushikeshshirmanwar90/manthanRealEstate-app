@@ -45,7 +45,7 @@ const List = () => {
     const getData = async () => {
       console.log(userName);
       const res = await fetch(
-        `${url}/api/leads?filters[$and][0][assign][$eq]=${userName}`
+        `${url}/api/leads?filters[$and][0][assign][$eq]=${userName}&filters[$and][0][booked][$eq]=true`
       );
       const data = await res.json();
       setLeads(data.data);
@@ -125,21 +125,6 @@ const List = () => {
                   <Text style={styles.cardPhone}>
                     Phone Number : {item.attributes.phone_number}
                   </Text>
-
-                  {item.attributes.booked === true ? (
-                    <Text
-                      style={{
-                        color: "#f5162c",
-                        fontWeight: 700,
-                        marginTop: 3,
-                        fontSize: 16,
-                      }}
-                    >
-                      Closed
-                    </Text>
-                  ) : (
-                    ""
-                  )}
                 </View>
               </TouchableOpacity>
             </View>

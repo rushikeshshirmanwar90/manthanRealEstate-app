@@ -1,2 +1,2 @@
-const url = "http://192.168.1.10:1337";
+const url = "http://192.168.89.135:1337";
 export default url;

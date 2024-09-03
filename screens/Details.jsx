@@ -211,24 +211,26 @@ const Details = ({ route }) => {
             </Text>
           </View>
 
-          <Text style={{ fontSize: 16, color: COLORS.grey }}>
-            {house.attributes.address}
-          </Text>
-
-          <Text style={{ fontSize: 16, color: COLORS.grey }}>
-            {house.attributes.city} {""} {house.attributes.state}
-          </Text>
-
           <Text style={{ fontSize: 18, color: COLORS.dark, marginTop: 5 }}>
             {house.attributes.description}
           </Text>
 
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <View style={style.facility}>
-              <Icon name="hotel" size={18} />
-              <Text style={style.facilityText}>{house.attributes.BHK}BHK</Text>
-            </View>
+          <View style={style.bookedInfo}>
+            <Text style={style.allText}>
+              <Text style={{ fontWeight: 700 }}>Total : </Text>
+              {house.attributes.total}
+            </Text>
+            <Text style={style.allText}>
+              <Text style={{ fontWeight: 700 }}>Booked : </Text>
+              {house.attributes.booked}
+            </Text>
+            <Text style={style.allText}>
+              <Text style={{ fontWeight: 700 }}>Available : </Text>
+              {house.attributes.total - house.attributes.booked}
+            </Text>
+          </View>
 
+          <View style={{ flexDirection: "row", marginTop: 20 }}>
             <View style={style.facility}>
               <Icon name="expand" size={18} />
               <Text style={style.facilityText}>
@@ -274,6 +276,17 @@ const Details = ({ route }) => {
 
 // STYLING
 const style = StyleSheet.create({
+  bookedInfo: {
+    marginTop: 5,
+    flex: 1,
+    flexDirection: "row",
+    gap: 20,
+  },
+
+  allText: {
+    fontSize: 15,
+  },
+
   backgroundImageContainer: {
     elevation: 20,
     marginHorizontal: 20,

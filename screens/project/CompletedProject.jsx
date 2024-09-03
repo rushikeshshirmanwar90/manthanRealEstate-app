@@ -44,7 +44,7 @@ const CompletedProject = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
           data={projects}
-          renderItem={({item}) => <ProjectCard project={item}/>}
+          renderItem={({ item }) => <ProjectCard project={item} />}
         />
       ) : (
         <Text> There is No Coming Project </Text>

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StatusBar, FlatList, Dimensions, Text } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  FlatList,
+  Dimensions,
+  Text,
+} from "react-native";
 import COLORS from "../../components/consts/colors";
 import url from "../../components/route/api";
 
