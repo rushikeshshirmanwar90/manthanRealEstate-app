@@ -45,9 +45,12 @@ const List = () => {
   useEffect(() => {
     const getData = async () => {
       console.log(userName);
+
+      // ${userName}
       const res = await fetch(
-        `${url}/api/leads?filters[$and][0][assign][$eq]=${userName}`
+        `${url}/api/leads?filters[$and][0][channel_partner][$eq]=broker`
       );
+
       const data = await res.json();
       setLeads(data.data);
       setLeadsLoading(false);
@@ -56,58 +59,13 @@ const List = () => {
     getData();
   }, [leadsLoading, userName]);
 
-  // Function for Closed Leads
-  const closeLead = async (id) => {
-    const res = await fetch(`${url}/api/leads/${id}`, {
-      method: "PUT",
-
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        data: {
-          booked: true,
-        },
-      }),
-    });
-
-    if (res.ok) {
-      console.log("Updated Successfully");
-      const tmp = Math.random();
-      setRandomNum(tmp);
-    }
-  };
-
-  const handleAlert = (id) => {
-    Alert.alert("Lead is Booked", "", [
-      {
-        text: "Yes",
-        onPress: () => {
-          console.log(id);
-          closeLead(id);
-        },
-      },
-
-      {
-        text: "No",
-        onPress: () => {},
-      },
-    ]);
-  };
-
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.searchContent}>
         {leads.map((item, index) => {
           return (
             <View key={index} style={styles.cardWrapper}>
-              <TouchableOpacity
-                style={styles.card}
-                onPress={() => {
-                  handleAlert(item.id);
-                }}
-              >
+              <TouchableOpacity style={styles.card}>
                 <View style={[styles.cardAvatar, styles.cardImg]}>
                   <Text style={styles.cardAvatarText}>
                     {item.attributes.flat_id}
@@ -120,7 +78,7 @@ const List = () => {
                   </Text>
 
                   <Text style={styles.cardPhone}>
-                    Channel Partner : {item.attributes.channel_partner}
+                    Assign To : {item.attributes.assign}
                   </Text>
 
                   <Text style={styles.cardPhone}>

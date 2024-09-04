@@ -264,7 +264,7 @@ const Details = ({ route }) => {
                 flatId={house.id}
                 userId={userRawId}
                 flatName={house.attributes.name}
-                addLead={addLead()}
+                addLead={addLead}
               />
             </View>
           )}

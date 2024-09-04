@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import List from "../components/List";
+import List from "../components/brokerLead";
 
 const BrokerLeads = () => {
   return (

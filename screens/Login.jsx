@@ -63,7 +63,7 @@ const Index = () => {
             <Text style={styles.title}>
               Login in to{"\n"}
               <Text style={{ color: "#50719E" }}>
-                Manthan Infracare Pvt.Ltd
+                Manthan Infracare (opc) Pvt.Ltd
               </Text>
             </Text>
 

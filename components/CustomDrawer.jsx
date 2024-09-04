@@ -80,10 +80,12 @@ const CustomDrawer = (props) => {
       {/* Conditional rendering based on userType */}
 
       {userType === "staff" ? (
-        <DrawerItem
-          label="My Assign Leads"
-          onPress={() => navigation.navigate("Assign Leads")}
-        />
+        <>
+          <DrawerItem
+            label="My Assign Leads"
+            onPress={() => navigation.navigate("Assign Leads")}
+          />
+        </>
       ) : null}
 
       {/* {userType === "broker" ? (
