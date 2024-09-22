@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-
 import {
   Text,
   View,
@@ -8,7 +7,6 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
@@ -29,7 +27,9 @@ const Index = () => {
 
   const handleRegister = async () => {
     if (email !== "" && password !== "") {
+
       try {
+
         console.log("Creating user with email and password");
 
         let userId = "";
@@ -104,7 +104,6 @@ const Index = () => {
           </View>
 
           <View style={styles.form}>
-            {/* Taking Input  */}
 
             {/* Taking full name input */}
             <View style={styles.input}>
@@ -118,6 +117,7 @@ const Index = () => {
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
                 value={name}
+
               />
             </View>
 
@@ -164,6 +164,7 @@ const Index = () => {
                   secureTextEntry={!showPassword}
                   value={password}
                 />
+
                 <TouchableOpacity
                   style={styles.eyeIcon}
                   onPress={() => setShowPassword(!showPassword)}

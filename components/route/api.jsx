@@ -1,2 +1,2 @@
-const url = "http://192.168.1.7:1337";
+const url = "https://dolphin-app-6886s.ondigitalocean.app";
 export default url;
