@@ -61,7 +61,6 @@ const Index = () => {
               source={Logo}
             />
             <Text style={styles.title}>
-              Login in to{"\n"}
               <Text style={{ color: "#50719E" }}>
                 Manthan Infracare (opc) Pvt.Ltd
               </Text>

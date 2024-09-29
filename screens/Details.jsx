@@ -28,6 +28,10 @@ const { width } = Dimensions.get("screen");
 const Details = ({ route }) => {
   const house = route.params;
 
+  console.log("------------------------------------");
+  console.log(house.id);
+  console.log("------------------------------------");
+
   // USER INFORMATION STATES
   const [userType, setUserType] = useState("");
   const [userName, setUserName] = useState("");
@@ -140,12 +144,14 @@ const Details = ({ route }) => {
         userPhoneNumber,
         "SELF"
       );
+
+      console.log("----------------------------------------");
+      console.log(house);
+      console.log("----------------------------------------");
+
       const url = `whatsapp://send?phone=9579896842&text=Hey There i am ${userName} and i am interested in your Flat 
       \n
-      ${house.attributes.name} \n
-      ${house.attributes.address} \n
-      ${house.attributes.city} \n
-      ${house.attributes.state} \n
+        FlatId : ${house.id}
       `;
       Linking.openURL(url).catch(() => {
         Alert.alert("Make sure WhatsApp is installed on your device");
