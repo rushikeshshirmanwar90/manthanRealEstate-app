@@ -19,18 +19,15 @@ import { auth } from "../firebase/config";
 import COLORS from "../components/consts/colors";
 import url from "../components/route/api";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Skeleton from "../components/Skeleton";
 
 // importing components
 import Model from "../components/Model";
-
 const { width } = Dimensions.get("screen");
 
 const Details = ({ route }) => {
-  const house = route.params;
 
-  console.log("------------------------------------");
-  console.log(house.id);
-  console.log("------------------------------------");
+  const house = route.params;
 
   // USER INFORMATION STATES
   const [userType, setUserType] = useState("");
@@ -40,7 +37,6 @@ const Details = ({ route }) => {
   // Loading States
   const [loading, setLoading] = useState(true);
   const [userTypeLoading, setUserTypeLoading] = useState(true);
-
   const [mainHouse, setMainHouse] = useState(
     house.attributes.images.data[0].attributes.url
   );
@@ -79,6 +75,7 @@ const Details = ({ route }) => {
     };
 
     getData();
+
   }, [userId, userTypeLoading, userType, userName]);
 
   // COMPONENT FOR THE SMALL IMAGES
@@ -135,7 +132,9 @@ const Details = ({ route }) => {
 
   // FUNCTION TO WHATSAPP MESSAGE
   const handleWhatsAppPress = async () => {
+
     try {
+
       await addLead(
         userRawId,
         house.id,
@@ -187,6 +186,7 @@ const Details = ({ route }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.backgroundImageContainer}>
+
           <ImageBackground
             style={style.backgroundImage}
             source={{ uri: mainHouse }}
@@ -200,6 +200,7 @@ const Details = ({ route }) => {
         </View>
 
         <View style={style.detailsContainer}>
+
           <FlatList
             contentContainerStyle={{ marginTop: 20, marginBottom: 20 }}
             horizontal
@@ -242,6 +243,10 @@ const Details = ({ route }) => {
               <Text style={style.facilityText}>
                 {house.attributes.area} SQT
               </Text>
+            </View>
+            <View style={style.facility}>
+              <Icon name="aspect-ratio" size={18} />
+              <Text style={style.facilityText}>{house.attributes.area}</Text>
             </View>
           </View>
 

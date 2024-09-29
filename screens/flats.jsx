@@ -10,6 +10,7 @@ import COLORS from "../components/consts/colors";
 import url from "../components/route/api";
 import Card from "../components/Cards";
 import Swiper from "../components/swiper";
+import Skeleton from "../components/Skeleton";
 
 const { width } = Dimensions.get("screen");
 
@@ -38,21 +39,33 @@ const Flats = (projectName) => {
         barStyle="dark-content"
       />
       <View style={{ flex: 1 }}>
-        <View style={{ height: "40%" }}>
-          <Swiper images={projectName.route.params.imgs} />
-        </View>
+        {!loading ? (
+          <View style={{ height: "40%" }}>
+            <Swiper images={projectName.route.params.imgs} />
+          </View>
+        ) : (
+          <View style={{ paddingLeft: 20 }}>
+            <Skeleton width={375} height={350} />
+          </View>
+        )}
 
-        <View style={{ flex: 1, marginTop: 45 }}>
-          <FlatList
-            snapToInterval={width - 20}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
-            data={flats}
-            renderItem={({ item }) => (
-              <Card house={item} address={projectName.route.params.address} />
-            )}
-          />
-        </View>
+        {!loading ? (
+          <View style={{ flex: 1, marginTop: 45 }}>
+            <FlatList
+              snapToInterval={width - 20}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
+              data={flats}
+              renderItem={({ item }) => (
+                <Card house={item} address={projectName.route.params.address} />
+              )}
+            />
+          </View>
+        ) : (
+          <View style={{ paddingLeft: 20, marginTop: 40 }}>
+            <Skeleton width={370} height={100} />
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
