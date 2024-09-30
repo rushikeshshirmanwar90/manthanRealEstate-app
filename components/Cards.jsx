@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 // import { style } from "../styles/project";
 
 const Card = ({ house, address }) => {
+
   const navigation = useNavigation();
 
   return (
