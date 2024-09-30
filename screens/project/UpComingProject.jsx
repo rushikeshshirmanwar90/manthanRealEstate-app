@@ -11,6 +11,7 @@ import url from "../../components/route/api";
 
 // IMPORTING CUSTOM COMPONENTS
 import ProjectCard from "../../components/ProjectCard";
+import Skeleton from "../../components/Skeleton";
 
 const { width } = Dimensions.get("screen");
 
@@ -38,7 +39,11 @@ const CompletedProject = () => {
         barStyle="dark-content"
       />
 
-      {projects.length !== 0 ? (
+      {loading ? (
+        <View style={{ marginHorizontal: 20 }}>
+          <Skeleton width={380} height={180} />
+        </View>
+      ) : projects.length !== 0 ? (
         <FlatList
           snapToInterval={width - 20}
           showsHorizontalScrollIndicator={false}
@@ -47,7 +52,7 @@ const CompletedProject = () => {
           renderItem={({ item }) => <ProjectCard project={item} />}
         />
       ) : (
-        <Text> There is No upComing Project </Text>
+        <Text>There is No onGoing Project</Text>
       )}
     </SafeAreaView>
   );
