@@ -5,6 +5,7 @@ import {
   FlatList,
   Dimensions,
   Text,
+  View,
 } from "react-native";
 import COLORS from "../../components/consts/colors";
 import url from "../../components/route/api";

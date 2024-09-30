@@ -26,7 +26,6 @@ import Model from "../components/Model";
 const { width } = Dimensions.get("screen");
 
 const Details = ({ route }) => {
-
   const house = route.params;
 
   // USER INFORMATION STATES
@@ -75,7 +74,6 @@ const Details = ({ route }) => {
     };
 
     getData();
-
   }, [userId, userTypeLoading, userType, userName]);
 
   // COMPONENT FOR THE SMALL IMAGES
@@ -132,9 +130,7 @@ const Details = ({ route }) => {
 
   // FUNCTION TO WHATSAPP MESSAGE
   const handleWhatsAppPress = async () => {
-
     try {
-
       await addLead(
         userRawId,
         house.id,
@@ -186,7 +182,6 @@ const Details = ({ route }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.backgroundImageContainer}>
-
           <ImageBackground
             style={style.backgroundImage}
             source={{ uri: mainHouse }}
@@ -200,7 +195,6 @@ const Details = ({ route }) => {
         </View>
 
         <View style={style.detailsContainer}>
-
           <FlatList
             contentContainerStyle={{ marginTop: 20, marginBottom: 20 }}
             horizontal

@@ -64,6 +64,8 @@ const Flats = (projectName) => {
         ) : (
           <View style={{ paddingLeft: 20, marginTop: 40 }}>
             <Skeleton width={370} height={100} />
+            <Skeleton width={370} height={100} />
+            <Skeleton width={370} height={100} />
           </View>
         )}
       </View>

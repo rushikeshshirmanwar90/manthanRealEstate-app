@@ -4,6 +4,7 @@ import {
   StatusBar,
   FlatList,
   Dimensions,
+  View,
   Text,
 } from "react-native";
 import COLORS from "../../components/consts/colors";

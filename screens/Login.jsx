@@ -17,11 +17,13 @@ import { useNavigation } from "@react-navigation/core";
 import { styles } from "../styles/Login";
 
 import Logo from "../assets/logo.png";
+import FastImage from "react-native-fast-image";
 
 const Index = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
 
@@ -45,9 +47,22 @@ const Index = () => {
         .catch((err) => {
           alert(err.message);
           console.log(err.message);
-        });
+        })
+        .finally(setLoading(false));
     }
   };
+
+  if (loading) {
+    return (
+      <View style={{ position: "absolute", top: 10, left: -70 }}>
+        <Image
+          style={{ width: 560 }}
+          source={require("../assets/loading/loading.gif")} // Path to your GIF
+          resizeMode={FastImage.resizeMode.contain}
+        />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
