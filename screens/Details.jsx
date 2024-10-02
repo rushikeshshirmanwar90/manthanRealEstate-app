@@ -55,7 +55,7 @@ const Details = ({ route }) => {
     return unsubscribe;
   }, [userId, loading]);
 
-  // GETTING THE USER-INFO
+  
   useEffect(() => {
     const getData = async () => {
       const res = await fetch(
