@@ -55,7 +55,7 @@ const Details = ({ route }) => {
     return unsubscribe;
   }, [userId, loading]);
 
-  
+  // GETTING THE USER-INFO
   useEffect(() => {
     const getData = async () => {
       const res = await fetch(
@@ -131,20 +131,18 @@ const Details = ({ route }) => {
   // FUNCTION TO WHATSAPP MESSAGE
   const handleWhatsAppPress = async () => {
     try {
-      await addLead(
-        userRawId,
-        house.id,
-        userName,
-        house.attributes.name,
-        userPhoneNumber,
-        "SELF"
-      );
-
-      console.log("----------------------------------------");
-      console.log(house);
-      console.log("----------------------------------------");
-
-      const url = `whatsapp://send?phone=9579896842&text=Hey There i am ${userName} and i am interested in your Flat 
+      const leadExists = await checkLeadExists(userRawId, house.id);
+      if (!leadExists) {
+        await addLead(
+          userRawId,
+          house.id,
+          userName,
+          house.attributes.name,
+          userPhoneNumber,
+          "SELF"
+        );
+      }
+      const url = `whatsapp://send?phone=9579896842&text=Hey There I am ${userName} interested in your Flat 
       \n
         FlatId : ${house.id}
       `;
@@ -159,14 +157,17 @@ const Details = ({ route }) => {
   // FUNCTION TO CALL
   const handleCallPress = async () => {
     try {
-      await addLead(
-        userId,
-        house.id,
-        userName,
-        house.attributes.name,
-        userPhoneNumber,
-        "SELF"
-      );
+      const leadExists = await checkLeadExists(userRawId, house.id);
+      if (!leadExists) {
+        await addLead(
+          userRawId,
+          house.id,
+          userName,
+          house.attributes.name,
+          userPhoneNumber,
+          "SELF"
+        );
+      }
       Linking.openURL("tel:+919579896842");
     } catch (error) {
       Alert.alert(error.message);
@@ -176,6 +177,32 @@ const Details = ({ route }) => {
   // FUNCTION TO OPEN YOUTUBE
   const handleYTPress = () => {
     Linking.openURL(house.attributes.yt_link);
+  };
+
+  // FUNCTION TO CHECK LEAD IS PRESENT OR NOT
+  const checkLeadExists = async (userId, houseId) => {
+    try {
+      const res = await fetch(
+        `${url}/api/leads?user_id=${userId}&flat_id=${houseId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to check lead existence");
+      }
+
+      const data = await res.json();
+      // Assuming the response returns an array of leads
+      return data.length > 0; // Returns true if a lead exists
+    } catch (error) {
+      console.log(error.message);
+      return false; // Consider lead does not exist in case of an error
+    }
   };
 
   return (
