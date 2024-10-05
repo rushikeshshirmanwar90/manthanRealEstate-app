@@ -28,7 +28,7 @@ const { width } = Dimensions.get("screen");
 const Details = ({ route }) => {
   const house = route.params;
 
-  // USER INFORMATION STATES
+
   const [userType, setUserType] = useState("");
   const [userName, setUserName] = useState("");
   const [userPhoneNumber, setUserPhoneNumber] = useState();
@@ -133,6 +133,9 @@ const Details = ({ route }) => {
     try {
       const leadExists = await checkLeadExists(userRawId, house.id);
       if (!leadExists) {
+        console.log(userRawId);
+        console.log(userName);
+
         await addLead(
           userRawId,
           house.id,
@@ -231,6 +234,7 @@ const Details = ({ route }) => {
             renderItem={(item) => <InteriorCard item={item} />}
           />
 
+          {/* Changed 'aView' to 'View' */}
           <View
             style={{ flexDirection: "column", justifyContent: "space-between" }}
           >
@@ -290,15 +294,7 @@ const Details = ({ route }) => {
               </TouchableOpacity>
             </View>
           ) : (
-            <View>
-              <Model
-                userName={userName}
-                flatId={house.id}
-                userId={userRawId}
-                flatName={house.attributes.name}
-                addLead={addLead}
-              />
-            </View>
+            <Model />
           )}
         </View>
       </ScrollView>
@@ -306,19 +302,7 @@ const Details = ({ route }) => {
   );
 };
 
-// STYLING
 const style = StyleSheet.create({
-  bookedInfo: {
-    marginTop: 5,
-    flex: 1,
-    flexDirection: "row",
-    gap: 20,
-  },
-
-  allText: {
-    fontSize: 15,
-  },
-
   backgroundImageContainer: {
     elevation: 20,
     marginHorizontal: 20,
@@ -332,37 +316,43 @@ const style = StyleSheet.create({
     borderRadius: 20,
     overflow: "hidden",
   },
-  header: {
-    paddingVertical: 20,
+  virtualTag: {
+    height: 40,
+    width: 120,
+    backgroundColor: COLORS.dark,
+    position: "absolute",
+    bottom: 0,
+    left: 20,
+    borderTopRightRadius: 30,
+    borderBottomLeftRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  detailsContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    marginTop: 40,
+  },
+  facility: {
+    flexDirection: "row",
+    marginRight: 15,
+  },
+  facilityText: {
+    marginLeft: 5,
+    color: COLORS.grey,
+  },
+  bookedInfo: {
+    marginTop: 10,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
-  },
-  headerBtn: {
-    height: 50,
-    width: 50,
-    backgroundColor: COLORS.white,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  ratingTag: {
-    height: 30,
-    width: 35,
-    backgroundColor: COLORS.blue,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: COLORS.dark,
     borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: COLORS.light,
   },
-  virtualTag: {
-    top: -20,
-    width: 120,
-    borderRadius: 10,
-    height: 40,
-    paddingHorizontal: 20,
-    backgroundColor: COLORS.dark,
-    justifyContent: "center",
-    alignItems: "center",
+  allText: {
+    fontSize: 14,
   },
   interiorImage: {
     width: width / 3 - 20,
@@ -370,65 +360,37 @@ const style = StyleSheet.create({
     marginRight: 10,
     borderRadius: 10,
   },
-  footer: {
-    height: 70,
-    backgroundColor: COLORS.light,
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 10,
-  },
-  bookNowBtn: {
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: COLORS.dark,
-    borderRadius: 10,
-    paddingHorizontal: 20,
-  },
-  detailsContainer: { flex: 1, paddingHorizontal: 20, marginTop: 40 },
-  facility: { flexDirection: "row", marginRight: 15 },
-  facilityText: { marginLeft: 5, color: COLORS.grey },
-
   container: {
+    marginTop: 10,
     flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginTop: 1,
-    marginBottom: 10,
+    justifyContent: "space-between",
+    padding: 10,
   },
-
   button: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    backgroundColor: "#111",
+    backgroundColor: "#333",
     padding: 10,
-    borderRadius: 5,
-  },
-
-  wButton: {
-    backgroundColor: "#0ec40e",
     flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    padding: 10,
+    alignItems: "center",
     borderRadius: 5,
   },
 
   buttonText: {
+    marginLeft: 5,
     color: "#fff",
-    marginLeft: 10,
-    paddingHorizontal: 5,
+    fontWeight: "bold",
+  },
+
+  wButton: {
+    backgroundColor: "#25d366",
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 5,
   },
 
   wBtn: {
+    marginLeft: 5,
     color: "#fff",
-    marginLeft: 10,
-    paddingHorizontal: 5,
-    fontSize: 15,
     fontWeight: "bold",
   },
 });

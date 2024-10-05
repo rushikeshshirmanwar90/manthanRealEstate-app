@@ -25,67 +25,14 @@ const Index = () => {
 
   const navigation = useNavigation();
 
-  const handleRegister = async () => {
-    if (email !== "" && password !== "") {
-
-      try {
-
-        console.log("Creating user with email and password");
-
-        let userId = "";
-
-        await createUserWithEmailAndPassword(auth, email, password)
-          .then((result) => {
-            const user = result.user;
-            console.log("User created:", user.email);
-            console.log("Details: ", user.uid);
-            userId = user.uid;
-            navigation.replace("Home");
-          })
-
-          .catch((err) => {
-            console.error("Error creating user:", err);
-            alert(`Error creating user: ${err.message}`);
-          });
-
-        const res = await fetch(`${url}/api/user-ids`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            data: {
-              name: name,
-              number: number,
-              mail: email,
-              user_type: loginType,
-              userId: userId,
-            },
-          }),
-        });
-
-        console.log("Fetch response received");
-
-        if (!res.ok) {
-          const errorText = await res.text();
-          throw new Error(`Failed to fetch: ${errorText}`);
-        }
-      } catch (error) {
-        console.error("Error during registration:", error);
-        alert(`Registration failed: ${error.message}`);
-      }
-    } else {
-      alert("Email and password cannot be empty.");
-    }
-  };
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
       <View style={styles.container}>
         <KeyboardAwareScrollView>
           <View style={styles.header}>
             <Text style={styles.title}>
-              Login in to <Text style={{ color: "#075eec" }}>Manthan</Text>
+              Login in to{" "}
+              <Text style={{ color: "#075eec" }}>Manthan Infracare</Text>
             </Text>
             <Text style={styles.subtitle}>
               Login in to Manthan Get Your Dream house
@@ -104,7 +51,6 @@ const Index = () => {
           </View>
 
           <View style={styles.form}>
-
             {/* Taking full name input */}
             <View style={styles.input}>
               <Text style={styles.inputLabel}>Enter Full Name</Text>
@@ -117,7 +63,6 @@ const Index = () => {
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
                 value={name}
-
               />
             </View>
 

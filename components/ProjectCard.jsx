@@ -7,10 +7,10 @@ import COLORS from "../components/consts/colors";
 import { style } from "../styles/project";
 
 const ProjectCard = ({ project }) => {
+
   const navigation = useNavigation();
 
-  const img =
-    project.attributes.projectImage.data[0].attributes.formats.medium.url;
+  const img = project.attributes.projectImage.data[0].attributes.formats.medium.url;
 
   const imgData = project.attributes.projectImage.data;
 

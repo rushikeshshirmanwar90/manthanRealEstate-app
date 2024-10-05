@@ -102,7 +102,7 @@ const Index = () => {
               />
             </View>
 
-            {/* Taking input of Hotel Password */}
+            {/* Taking input of Password */}
             <View style={styles.input}>
               <Text style={styles.inputLabel}>Password</Text>
               <View style={styles.passwordContainer}>
