@@ -28,7 +28,6 @@ const { width } = Dimensions.get("screen");
 const Details = ({ route }) => {
   const house = route.params;
 
-
   const [userType, setUserType] = useState("");
   const [userName, setUserName] = useState("");
   const [userPhoneNumber, setUserPhoneNumber] = useState();
@@ -145,7 +144,7 @@ const Details = ({ route }) => {
           "SELF"
         );
       }
-      const url = `whatsapp://send?phone=9579896842&text=Hey There I am ${userName} interested in your Flat 
+      const url = `whatsapp://send?phone=8285374444&text=Hey There I am ${userName} interested in your Flat 
       \n
         FlatId : ${house.id}
       `;
@@ -171,7 +170,7 @@ const Details = ({ route }) => {
           "SELF"
         );
       }
-      Linking.openURL("tel:+919579896842");
+      Linking.openURL("tel:+918285374444");
     } catch (error) {
       Alert.alert(error.message);
     }
