@@ -109,7 +109,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.rushi_shrimanwar.manthanrealestate'
+    namespace "com.manthanrealestate"
     defaultConfig {
         applicationId 'com.rushi_shrimanwar.manthanrealestate'
         minSdkVersion rootProject.ext.minSdkVersion
