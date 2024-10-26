@@ -92,7 +92,7 @@ const Details = ({ route }) => {
   };
 
   // FUNCTION TO ADD LEADS
-  const addLead = async ( 
+  const addLead = async (
     userId,
     houseId,
     userName,
@@ -131,7 +131,7 @@ const Details = ({ route }) => {
   const handleWhatsAppPress = async () => {
     try {
       const leadExists = await checkLeadExists(userRawId, house.id);
-      if (!leadExists) {
+      if (leadExists) {
         console.log(userRawId);
         console.log(userName);
 
@@ -144,7 +144,7 @@ const Details = ({ route }) => {
           "SELF"
         );
       }
-      
+
       const url = `whatsapp://send?phone=8285374444&text=Hey There I am ${userName} interested in your Flat 
       \n
         FlatId : ${house.id}

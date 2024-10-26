@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import {
   Text,
   View,
@@ -8,16 +7,16 @@ import {
   TextInput,
   Image,
 } from "react-native";
-
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Ionicons } from "@expo/vector-icons";
 import { auth } from "../firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/core";
 import { styles } from "../styles/Login";
-
 import Logo from "../assets/logo.png";
 import FastImage from "react-native-fast-image";
+import url from "../components/route/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Index = () => {
   const [email, setEmail] = useState("");
@@ -36,19 +35,53 @@ const Index = () => {
     return unsubscribe;
   }, []);
 
-  const handleLogin = () => {
-    if (email !== "" && password !== "") {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((result) => {
-          const user = result.user;
-          console.log(user.email);
-          navigation.replace("Home");
-        })
-        .catch((err) => {
-          alert(err.message);
-          console.log(err.message);
-        })
-        .finally(setLoading(false));
+  const handleLogin = async () => {
+    try {
+      if (email !== "" && password !== "") {
+        setLoading(true); // Start loading
+
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        const user = result.user;
+        console.log(user.email);
+
+        const name = await getLeadInfo(email);
+
+        await AsyncStorage.setItem("userName", name);
+
+        navigation.replace("Home");
+      } else {
+        alert("Please enter both email and password");
+      }
+    } catch (error) {
+      alert("Error while Login: " + error.message);
+      console.log("Error while Login: " + error.message);
+    } finally {
+      setLoading(false); // Stop loading
+    }
+  };
+
+  const getLeadInfo = async (email) => {
+    try {
+      const res = await fetch(
+        `${url}/api/user-ids?filters[$and][0][mail][$eq]=${email}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to check lead existence");
+      }
+
+      const data = await res.json();
+      const name = data.data[0].attributes.name;
+      return name;
+    } catch (error) {
+      console.log(error.message);
+      return false;
     }
   };
 

@@ -27,7 +27,6 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function HomeDrawer() {
-
   // USER INFORMATION STATES
   const [userType, setUserType] = useState("");
   const [userName, setUserName] = useState("Rushikesh Shrimanwar");

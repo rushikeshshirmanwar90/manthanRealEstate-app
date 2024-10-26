@@ -4,27 +4,27 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
-} from "@react-navigation/drawer"; // Ensure DrawerItem is imported
+} from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/core";
 
-import { auth } from "../firebase/config"; // Ensure this path matches your project structure
-import url from "./route/api"; // Ensure this path matches your project structure
+import { auth } from "../firebase/config";
+import url from "./route/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CustomDrawer = (props) => {
   const navigation = useNavigation();
 
   const [userType, setUserType] = useState("");
-  const [userName, setUserName] = useState("Rushikesh Shrimanwar");
+  const [storedName, setStoredName] = useState("UserName"); // Changed to storedName
   const [userId, setUserId] = useState("");
 
-  // Loading States
+  // Loading State
   const [loading, setLoading] = useState(true);
 
-  // Function to store userType in AsyncStorage
-  const storeUserType = async (name, value) => {
+  // Function to store data in AsyncStorage
+  const storeUserData = async (key, value) => {
     try {
-      await AsyncStorage.setItem(name, value);
+      await AsyncStorage.setItem(key, value);
     } catch (e) {
       console.error(e);
     }
@@ -44,24 +44,29 @@ const CustomDrawer = (props) => {
   }, []);
 
   useEffect(() => {
-    const getData = async () => {
+    const getUserData = async () => {
       if (!userId) return;
       try {
+        console.log(userId);
+        console.log(userId);
+
         const res = await fetch(
           `${url}/api/user-ids?filters[$and][0][userId][$eq]=${userId}`
         );
         const data = await res.json();
         const tmpUserType = data.data[0]?.attributes?.user_type || "";
-        const userName = data.data[0]?.attributes.name || "";
+        const name = data.data[0]?.attributes.name || "";
         setUserType(tmpUserType);
-        await storeUserType("@user_type", tmpUserType);
-        await storeUserType("@user_name", userName);
+
+        console.log(name);
+        setStoredName(name);
+
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
-    getData();
+    getUserData();
   }, [userId]);
 
   if (loading) {
@@ -71,29 +76,27 @@ const CustomDrawer = (props) => {
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
       <View style={styles.drawerHeader}>
-        <Text style={styles.greeting}>Hello, {userName}</Text>
+        <Text style={styles.greeting}>Hello, {storedName}</Text>
       </View>
 
       {/* Conditionally render DrawerItemList based on userType */}
       {userType !== "staff" && <DrawerItemList {...props} />}
 
       {/* Conditional rendering based on userType */}
+      {userType === "staff" && (
+        <DrawerItem
+          label="My Assign Leads"
+          onPress={() => navigation.navigate("Assign Leads")}
+        />
+      )}
 
-      {userType === "staff" ? (
-        <>
-          <DrawerItem
-            label="My Assign Leads"
-            onPress={() => navigation.navigate("Assign Leads")}
-          />
-        </>
-      ) : null}
-
-      {/* {userType === "broker" ? (
+      {/* Uncomment and modify as needed */}
+      {/* {userType === "broker" && (
         <DrawerItem
           label="My Leads"
           onPress={() => navigation.navigate("My leads")}
         />
-      ) : null} */}
+      )} */}
 
       <View style={styles.signOutContainer}>
         <Button

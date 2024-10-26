@@ -6,7 +6,9 @@ import {
   StyleSheet,
   SafeAreaView,
   Image,
+  Linking,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import COLORS from "../components/consts/colors";
 import { useNavigation } from "@react-navigation/core";
@@ -25,8 +27,8 @@ const OnBoardScreen = () => {
 
       <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
         <View>
-          <Text style={style.title}>Find your</Text>
-          <Text style={style.title}>sweet home</Text>
+          <Text style={style.title}>Discover homes that inspire You,</Text>
+          <Text style={style.title}>On A Single Click</Text>
         </View>
       </View>
 
@@ -42,15 +44,21 @@ const OnBoardScreen = () => {
             <Text style={{ color: "white", fontSize: 20 }}>Get Started</Text>
           </View>
         </Pressable>
-        <View
+        <TouchableOpacity
           style={{
             marginTop: 10,
+          }}
+          onPress={() => {
+            const url = `whatsapp://send?phone=9579896842&text=Hey There i want to Develop An Application`;
+            Linking.openURL(url).catch(() => {
+              Alert.alert("Make sure WhatsApp is installed on your device");
+            });
           }}
         >
           <Text
             style={{
-              color: "#222",
-              fontSize: 15,
+              color: "#455ff5",
+              fontSize: 16,
               textAlign: "center",
               marginTop: 5,
               fontWeight: "bold",
@@ -58,7 +66,7 @@ const OnBoardScreen = () => {
           >
             Developed By Rushikesh Shrimanwar
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -94,7 +102,7 @@ const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  title: { fontSize: 32, fontWeight: "bold" },
+  title: { fontSize: 30, fontWeight: "bold" },
   textStyle: { fontSize: 16, color: COLORS.grey },
 });
 export default OnBoardScreen;
