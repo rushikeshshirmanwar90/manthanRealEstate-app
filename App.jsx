@@ -1,11 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import * as SplashScreen from "expo-splash-screen";
-import * as Font from "expo-font";
-import Entypo from "@expo/vector-icons/Entypo";
 
 // Drawer Screen Components
 import CompletedProject from "./screens/project/CompletedProject";
@@ -27,17 +23,11 @@ import StaffLeads from "./screens/StaffLeads";
 import { auth } from "./firebase/config";
 import url from "./components/route/api";
 
-// Keep the splash screen visible while we fetch resources
-SplashScreen.preventAutoHideAsync()
-  .then((result) =>
-    console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`)
-  )
-  .catch(console.warn);
-
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function HomeDrawer() {
+
   // USER INFORMATION STATES
   const [userType, setUserType] = useState("");
   const [userName, setUserName] = useState("Rushikesh Shrimanwar");
@@ -85,7 +75,6 @@ function HomeDrawer() {
         setUserTypeLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setUserTypeLoading(false);
       }
     };
 
@@ -123,96 +112,23 @@ function HomeDrawer() {
 }
 
 export default function App() {
-  const [appIsReady, setAppIsReady] = useState(false);
-  const [initialRoute, setInitialRoute] = useState("Manthan");
-
-  useEffect(() => {
-    async function prepare() {
-      try {
-        console.log("Starting app preparation...");
-
-        // Prevent auto-hiding of splash screen
-        await SplashScreen.preventAutoHideAsync();
-
-        // Load fonts
-        await Font.loadAsync({
-          ...Entypo.font,
-        });
-
-        // Check if user is logged in
-        await new Promise((resolve) => {
-          const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-              setInitialRoute("Home");
-            }
-            resolve();
-            unsubscribe();
-          });
-        });
-
-        // Artificial delay to show splash screen
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-
-        console.log("App preparation completed");
-      } catch (e) {
-        console.warn("Error during app preparation:", e);
-      } finally {
-        setAppIsReady(true);
-      }
-    }
-
-    prepare();
-  }, []);
-
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      try {
-        console.log("Hiding splash screen");
-        await SplashScreen.hideAsync();
-      } catch (e) {
-        console.warn("Error hiding splash screen:", e);
-      }
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
-    return null;
-  }
-
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={initialRoute}
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#f2f2f2",
-            },
-            headerTintColor: "#222",
-          }}
-        >
-          <Stack.Screen name="Manthan" component={OnBoardScreen} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen
-            name="Home"
-            options={{ headerShown: false }}
-            component={HomeDrawer}
-          />
-          <Stack.Screen name="Details" component={Details} />
-          <Stack.Screen name="Fav" component={FavHome} />
-          <Stack.Screen name="Flats" component={Flats} />
-          <Stack.Screen name="My Leads" component={BrokerLeads} />
-          <Stack.Screen name="Assign Leads" component={StaffLeads} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Manthan Infracare" component={OnBoardScreen} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen
+          name="Home"
+          options={{ headerShown: false }}
+          component={HomeDrawer}
+        />
+        <Stack.Screen name="Details" component={Details} />
+        <Stack.Screen name="Fav" component={FavHome} />
+        <Stack.Screen name="Flats" component={Flats} />
+        <Stack.Screen name="My Leads" component={BrokerLeads} />
+        <Stack.Screen name="Assign Leads" component={StaffLeads} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-  },
-});

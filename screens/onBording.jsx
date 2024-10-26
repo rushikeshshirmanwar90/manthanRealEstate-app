@@ -28,13 +28,6 @@ const OnBoardScreen = () => {
           <Text style={style.title}>Find your</Text>
           <Text style={style.title}>sweet home</Text>
         </View>
-
-        <View style={{ marginTop: 10 }}>
-          <Text style={style.textStyle}>
-            Schedule visits in just a few clicks
-          </Text>
-          <Text style={style.textStyle}>visit in just a few clicks</Text>
-        </View>
       </View>
 
       <View
@@ -44,13 +37,28 @@ const OnBoardScreen = () => {
           paddingBottom: 40,
         }}
       >
-
         <Pressable onPress={() => navigation.replace("Login")}>
           <View style={style.btn}>
             <Text style={{ color: "white", fontSize: 20 }}>Get Started</Text>
           </View>
         </Pressable>
-
+        <View
+          style={{
+            marginTop: 10,
+          }}
+        >
+          <Text
+            style={{
+              color: "#222",
+              fontSize: 15,
+              textAlign: "center",
+              marginTop: 5,
+              fontWeight: "bold",
+            }}
+          >
+            Developed By Rushikesh Shrimanwar
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
