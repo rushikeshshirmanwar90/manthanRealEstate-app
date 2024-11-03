@@ -49,9 +49,8 @@ const OnBoardScreen = () => {
             marginTop: 10,
           }}
           onPress={() => {
-            const url = `whatsapp://send?phone=9579896842&text=Hey There i want to Develop An Application`;
-            Linking.openURL(url).catch(() => {
-              Alert.alert("Make sure WhatsApp is installed on your device");
+            Linking.openURL("tel:+91957989*6842").catch(() => {
+              Alert.alert("Something went wrong..!");
             });
           }}
         >

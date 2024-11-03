@@ -54,7 +54,7 @@ const CompletedProject = () => {
           renderItem={({ item }) => <ProjectCard project={item} />}
         />
       ) : (
-        <Text>There is No onGoing Project</Text>
+        <Text>There is No Completed Project yet</Text>
       )}
     </SafeAreaView>
   );

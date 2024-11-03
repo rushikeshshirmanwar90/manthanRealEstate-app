@@ -131,7 +131,7 @@ const Details = ({ route }) => {
   const handleWhatsAppPress = async () => {
     try {
       const leadExists = await checkLeadExists(userRawId, house.id);
-      if (leadExists) {
+      if (!leadExists) {
         console.log(userRawId);
         console.log(userName);
 
@@ -161,7 +161,7 @@ const Details = ({ route }) => {
   const handleCallPress = async () => {
     try {
       const leadExists = await checkLeadExists(userRawId, house.id);
-      if (leadExists) {
+      if (!leadExists) {
         await addLead(
           userRawId,
           house.id,
@@ -200,8 +200,8 @@ const Details = ({ route }) => {
       }
 
       const data = await res.json();
-      // Assuming the response returns an array of leads
-      return data.length > 0; // Returns true if a lead exists
+      return data.data.length > 0;
+
     } catch (error) {
       console.log(error.message);
       return false; // Consider lead does not exist in case of an error
@@ -268,10 +268,6 @@ const Details = ({ route }) => {
               <Text style={style.facilityText}>
                 {house.attributes.area} SQT
               </Text>
-            </View>
-            <View style={style.facility}>
-              <Icon name="aspect-ratio" size={18} />
-              <Text style={style.facilityText}>{house.attributes.area}</Text>
             </View>
           </View>
 
