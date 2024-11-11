@@ -90,7 +90,7 @@ const Index = () => {
       <View style={{ position: "absolute", top: 10, left: -70 }}>
         <Image
           style={{ width: 560 }}
-          source={require("../assets/loading/loading.gif")} // Path to your GIF
+          source={require("../assets/loading/loading.gif")}
           resizeMode={FastImage.resizeMode.contain}
         />
       </View>
@@ -98,7 +98,7 @@ const Index = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#162c63" }}>
       <View style={styles.container}>
         <KeyboardAwareScrollView>
           <View style={styles.header}>
@@ -109,7 +109,7 @@ const Index = () => {
               source={Logo}
             />
             <Text style={styles.title}>
-              <Text style={{ color: "#50719E" }}>
+              <Text style={{ color: "#00CCFF" }}>
                 Manthan Infracare (opc) Pvt.Ltd
               </Text>
             </Text>
@@ -178,7 +178,7 @@ const Index = () => {
                 style={styles.formLink}
                 onPress={() => navigation.navigate("Register")}
               >
-                Don't have an account ?{" "}
+                New Registration!..?{" "}
               </Text>
             </View>
           </View>

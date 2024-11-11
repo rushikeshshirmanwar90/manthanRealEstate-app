@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StatusBar,
   View,
@@ -12,9 +12,23 @@ import {
 } from "react-native";
 import COLORS from "../components/consts/colors";
 import { useNavigation } from "@react-navigation/core";
+import { auth } from "../firebase/config";
 
 const OnBoardScreen = () => {
   const navigation = useNavigation();
+  const [userId, setUserId] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        const userId = user.uid;
+        setUserId(userId);
+        setLoading(false);
+      }
+    });
+    return unsubscribe;
+  }, [userId, loading]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -39,17 +53,26 @@ const OnBoardScreen = () => {
           paddingBottom: 40,
         }}
       >
-        <Pressable onPress={() => navigation.replace("Login")}>
-          <View style={style.btn}>
-            <Text style={{ color: "white", fontSize: 20 }}>Get Started</Text>
-          </View>
-        </Pressable>
+        {!loading && userId ? (
+          <Pressable onPress={() => navigation.replace("Register")}>
+            <View style={style.btn}>
+              <Text style={{ color: "white", fontSize: 20 }}>Get Started</Text>
+            </View>
+          </Pressable>
+        ) : (
+          <Pressable onPress={() => navigation.replace("Home")}>
+            <View style={style.btn}>
+              <Text style={{ color: "white", fontSize: 20 }}>Get Started</Text>
+            </View>
+          </Pressable>
+        )}
+
         <TouchableOpacity
           style={{
             marginTop: 10,
           }}
           onPress={() => {
-            Linking.openURL("tel:+91957989*6842").catch(() => {
+            Linking.openURL("tel:+919579896842").catch(() => {
               Alert.alert("Something went wrong..!");
             });
           }}
@@ -104,4 +127,5 @@ const style = StyleSheet.create({
   title: { fontSize: 30, fontWeight: "bold" },
   textStyle: { fontSize: 16, color: COLORS.grey },
 });
+
 export default OnBoardScreen;

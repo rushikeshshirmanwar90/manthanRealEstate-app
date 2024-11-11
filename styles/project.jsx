@@ -99,10 +99,10 @@ export const style = StyleSheet.create({
     marginTop: 40,
     paddingHorizontal: 40,
   },
-  
+
   card: {
     height: 250,
-    backgroundColor: COLORS.white,
+    backgroundColor: "#f0c35f",
     elevation: 10,
     width: width - 40,
     marginRight: 20,

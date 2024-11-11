@@ -95,7 +95,7 @@ function HomeDrawer() {
         drawerActiveBackgroundColor: "#cccccc",
         drawerInactiveTintColor: "#fff",
         headerStyle: {
-          backgroundColor: "#f2f2f2",
+          backgroundColor: "#f0c35f",
         },
         headerTintColor: "#222",
       }}
@@ -113,7 +113,7 @@ function HomeDrawer() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name="Manthan Infracare" component={OnBoardScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />

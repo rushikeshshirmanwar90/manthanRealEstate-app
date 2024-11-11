@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
   subtitle: {
     fontSize: 15,
     fontWeight: "500",
-    color: "#929292",
+    color: "#fff",
   },
 
   header: {
@@ -50,9 +50,9 @@ export const styles = StyleSheet.create({
   },
 
   formLink: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#075eec",
+    fontSize: 18,
+    fontWeight: "800",
+    color: "#fff",
     textAlign: "center",
   },
 
@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 17,
     fontWeight: "600",
-    color: "#222",
+    color: "#fff",
     marginBottom: 8,
   },
 
@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
   btn2: {
     height: 60,
     marginHorizontal: 20,
-    backgroundColor: "black",
+    backgroundColor: "#02174a",
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",

@@ -145,7 +145,7 @@ const Details = ({ route }) => {
         );
       }
 
-      const url = `whatsapp://send?phone=8285374444&text=Hey There I am ${userName} interested in your Flat 
+      const url = `whatsapp://send?phone=8285354444&text=Hey There I am ${userName} interested in your Flat 
       \n
         FlatId : ${house.id}
       `;
@@ -171,7 +171,7 @@ const Details = ({ route }) => {
           "SELF"
         );
       }
-      Linking.openURL("tel:+918285374444");
+      Linking.openURL("tel:+918285354444");
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -201,7 +201,6 @@ const Details = ({ route }) => {
 
       const data = await res.json();
       return data.data.length > 0;
-
     } catch (error) {
       console.log(error.message);
       return false; // Consider lead does not exist in case of an error
