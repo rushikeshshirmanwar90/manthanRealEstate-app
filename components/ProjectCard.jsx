@@ -1,16 +1,15 @@
 import React from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import COLORS from "../components/consts/colors";
 
 // IMPORTING STYLES
 import { style } from "../styles/project";
 
 const ProjectCard = ({ project }) => {
-
   const navigation = useNavigation();
 
-  const img = project.attributes.projectImage.data[0].attributes.formats.medium.url;
+  const img =
+    project.attributes.projectImage.data[0].attributes.formats.medium.url;
 
   const imgData = project.attributes.projectImage.data;
   const name = project.attributes.projectName;
@@ -43,14 +42,14 @@ const ProjectCard = ({ project }) => {
           >
             <Text
               style={[
-                { fontSize: 16, fontWeight: "bold" },
+                { fontSize: 18, fontWeight: "bold", color: "#f0c35f" },
                 { textTransform: "capitalize" },
               ]}
             >
               {project.attributes.projectName}
             </Text>
           </View>
-          <Text style={{ color: COLORS.grey, fontSize: 14, marginTop: 5 }}>
+          <Text style={{ color: "#A9A9A9", fontSize: 15, marginTop: 5 }}>
             {project.attributes.address}
           </Text>
         </View>

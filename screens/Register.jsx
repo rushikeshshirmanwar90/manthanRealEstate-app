@@ -15,6 +15,7 @@ import { auth } from "../firebase/config";
 import { styles } from "../styles/Login";
 import url from "../components/route/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import COLORS from "../components/consts/colors";
 
 const Index = () => {
   const [name, setName] = useState("");
@@ -32,7 +33,7 @@ const Index = () => {
       }
     });
     return unsubscribe;
-  }, [navigation]);
+  }, []);
 
   const handleRegister = async () => {
     if (email === "" || password === "") {
@@ -79,7 +80,7 @@ const Index = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#162c63" }}>
       <View style={styles.container}>
         <KeyboardAwareScrollView>
           <View style={styles.header}>
@@ -179,7 +180,7 @@ const Index = () => {
             <View style={styles.formAction}>
               <TouchableOpacity onPress={handleRegister}>
                 <View style={styles.btn2}>
-                  <Text style={{ color: "white", fontSize: 20 }}>
+                  <Text style={{ color: COLORS.golden, fontSize: 20 }}>
                     Register Now
                   </Text>
                 </View>

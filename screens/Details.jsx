@@ -77,6 +77,8 @@ const Details = ({ route }) => {
 
   // COMPONENT FOR THE SMALL IMAGES
   const InteriorCard = ({ item }) => {
+    const isActive = mainHouse === item.item.attributes.formats.medium.url;
+
     return (
       <Pressable
         onPress={() => {
@@ -85,7 +87,13 @@ const Details = ({ route }) => {
       >
         <Image
           source={{ uri: item.item.attributes.formats.medium.url }}
-          style={style.interiorImage}
+          style={[
+            style.interiorImage,
+            {
+              borderWidth: isActive ? 5 : 2, // Active image has border 5, others 2
+              borderColor: isActive ? "#f0c35f" : "#ccc", // Active border color golden, others grey
+            },
+          ]}
         />
       </Pressable>
     );
@@ -208,7 +216,7 @@ const Details = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.blue }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.backgroundImageContainer}>
           <ImageBackground
@@ -218,7 +226,7 @@ const Details = ({ route }) => {
 
           <TouchableOpacity onPress={handleYTPress}>
             <View style={style.virtualTag}>
-              <Text style={{ color: "white" }}>Virtual tour</Text>
+              <Text style={{ color: COLORS.golden }}>Virtual tour</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -233,30 +241,45 @@ const Details = ({ route }) => {
             renderItem={(item) => <InteriorCard item={item} />}
           />
 
-          {/* Changed 'aView' to 'View' */}
           <View
             style={{ flexDirection: "column", justifyContent: "space-between" }}
           >
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            <Text
+              style={{ fontSize: 20, fontWeight: "bold", color: COLORS.golden }}
+            >
               {house.attributes.name}
             </Text>
           </View>
 
-          <Text style={{ fontSize: 18, color: COLORS.dark, marginTop: 5 }}>
-            {house.attributes.description}
+          <Text style={{ fontSize: 18, color: COLORS.grey, marginTop: 5 }}>
+            {house.attributes.description
+              ? house.attributes.description
+              : "NO DESCRIPTION"}
           </Text>
 
           <View style={style.bookedInfo}>
             <Text style={style.allText}>
-              <Text style={{ fontWeight: 700 }}>Total : </Text>
+              <Text
+                style={{ fontWeight: 500, fontSize: 16, color: COLORS.golden }}
+              >
+                Total :{"  "}
+              </Text>
               {house.attributes.total}
             </Text>
             <Text style={style.allText}>
-              <Text style={{ fontWeight: 700 }}>Booked : </Text>
+              <Text
+                style={{ fontWeight: 500, fontSize: 16, color: COLORS.golden }}
+              >
+                Booked :{"  "}
+              </Text>
               {house.attributes.booked}
             </Text>
             <Text style={style.allText}>
-              <Text style={{ fontWeight: 700 }}>Available : </Text>
+              <Text
+                style={{ fontWeight: 500, fontSize: 16, color: COLORS.golden }}
+              >
+                Available :{"  "}
+              </Text>
               {house.attributes.total - house.attributes.booked}
             </Text>
           </View>
@@ -269,10 +292,6 @@ const Details = ({ route }) => {
               </Text>
             </View>
           </View>
-
-          <Text style={{ marginTop: 20, color: COLORS.grey }}>
-            {house.details}
-          </Text>
 
           {userType !== "broker" ? (
             <View style={style.container}>
@@ -310,23 +329,27 @@ const style = StyleSheet.create({
     width: "100%",
     borderRadius: 20,
     overflow: "hidden",
+    borderWidth: 4,
+    borderColor: "#f0c35f",
   },
   virtualTag: {
     height: 40,
     width: 120,
-    backgroundColor: COLORS.dark,
+    backgroundColor: "#0a2159",
     position: "absolute",
-    bottom: 0,
-    left: 20,
-    borderTopRightRadius: 30,
-    borderBottomLeftRadius: 30,
+    bottom: -20,
+    left: -50,
+    color: COLORS.golden,
+    borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#f0c35f",
   },
   detailsContainer: {
     flex: 1,
     paddingHorizontal: 20,
-    marginTop: 40,
+    marginTop: 18,
   },
   facility: {
     flexDirection: "row",
@@ -341,20 +364,25 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
-    borderWidth: 1,
-    borderColor: COLORS.dark,
+    borderWidth: 2,
+    borderColor: COLORS.golden,
     borderRadius: 5,
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.blue,
   },
   allText: {
     fontSize: 14,
+    color: COLORS.grey,
   },
+
   interiorImage: {
     width: width / 3 - 20,
     height: 80,
     marginRight: 10,
     borderRadius: 10,
+    borderWidth: 2, // Default border width
+    borderColor: "#ccc", // Default border color
   },
+
   container: {
     marginTop: 10,
     flexDirection: "row",

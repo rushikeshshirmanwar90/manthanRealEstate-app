@@ -4,11 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import COLORS from "../components/consts/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-// IMPORTING STYLES
-// import { style } from "../styles/project";
-
 const Card = ({ house, address }) => {
-
   const navigation = useNavigation();
 
   return (
@@ -30,7 +26,17 @@ const Card = ({ house, address }) => {
               marginTop: 10,
             }}
           >
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#f0c35f",
+                flexWrap: "wrap", // Allow text to wrap
+                maxWidth: "80%", // Limit width to avoid overflow
+              }}
+              numberOfLines={1} // Limit to a single line
+              ellipsizeMode="tail" // Show "..." if text overflows
+            >
               {house.attributes.name}
             </Text>
           </View>
@@ -40,20 +46,24 @@ const Card = ({ house, address }) => {
               color: COLORS.grey,
               fontSize: 14,
               marginTop: 5,
-              width: 200,
+              width: "auto",
+              flexWrap: "wrap", // Allow text to wrap
+              maxWidth: "80%", // Limit width to avoid overflow
             }}
+            numberOfLines={2} // Limit address to 2 lines
+            ellipsizeMode="tail" // Show "..." if address text overflows
           >
             {address}
           </Text>
 
           <View style={{ marginTop: 10, flexDirection: "row" }}>
             <View style={style.facility}>
-              <Icon name="hotel" size={18} />
+              <Icon name="hotel" color={"#f0c35f"} size={18} />
               <Text style={style.facilityText}>{house.attributes.BHK}</Text>
             </View>
 
             <View style={style.facility}>
-              <Icon name="aspect-ratio" size={18} />
+              <Icon name="aspect-ratio" color={"#f0c35f"} size={18} />
               <Text style={style.facilityText}>{house.attributes.area}</Text>
             </View>
           </View>
@@ -68,7 +78,7 @@ export default Card;
 const style = StyleSheet.create({
   card: {
     flexDirection: "row",
-    backgroundColor: "white",
+    backgroundColor: "#0a2159",
     borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -78,6 +88,10 @@ const style = StyleSheet.create({
     padding: 10,
     margin: 10,
     gap: 12,
+    borderBlockColor: "#f0c35f",
+    borderWidth: 0.8,
+    borderColor: "#f0c35f",
+    elevation: 4,
   },
 
   image: {
@@ -115,5 +129,5 @@ const style = StyleSheet.create({
   },
 
   facility: { flexDirection: "row", marginRight: 15 },
-  facilityText: { marginLeft: 5, color: COLORS.grey },
+  facilityText: { marginLeft: 5, color: "#fff" },
 });

@@ -16,22 +16,19 @@ import { auth } from "../firebase/config";
 
 const OnBoardScreen = () => {
   const navigation = useNavigation();
-  const [userId, setUserId] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        const userId = user.uid;
-        setUserId(userId);
-        setLoading(false);
+        setIsUser(true);
       }
     });
     return unsubscribe;
-  }, [userId, loading]);
+  }, [isUser]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.blue }}>
       <StatusBar translucent backgroundColor={COLORS.transparent} />
 
       <Image
@@ -53,19 +50,15 @@ const OnBoardScreen = () => {
           paddingBottom: 40,
         }}
       >
-        {!loading && userId ? (
-          <Pressable onPress={() => navigation.replace("Register")}>
-            <View style={style.btn}>
-              <Text style={{ color: "white", fontSize: 20 }}>Get Started</Text>
-            </View>
-          </Pressable>
-        ) : (
-          <Pressable onPress={() => navigation.replace("Home")}>
-            <View style={style.btn}>
-              <Text style={{ color: "white", fontSize: 20 }}>Get Started</Text>
-            </View>
-          </Pressable>
-        )}
+        <Pressable onPress={() => navigation.replace("Register")}>
+          <View style={style.btn}>
+            <Text
+              style={{ color: COLORS.golden, fontSize: 20, fontWeight: 600 }}
+            >
+              Get Started
+            </Text>
+          </View>
+        </Pressable>
 
         <TouchableOpacity
           style={{
@@ -79,7 +72,7 @@ const OnBoardScreen = () => {
         >
           <Text
             style={{
-              color: "#455ff5",
+              color: COLORS.grey,
               fontSize: 16,
               textAlign: "center",
               marginTop: 5,
@@ -119,12 +112,14 @@ const style = StyleSheet.create({
   btn: {
     height: 60,
     marginHorizontal: 20,
-    backgroundColor: "black",
+    backgroundColor: "#0a2159",
+    borderWidth: 1,
+    borderColor: "#f0c35f",
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
   },
-  title: { fontSize: 30, fontWeight: "bold" },
+  title: { fontSize: 30, fontWeight: "bold", color: COLORS.golden },
   textStyle: { fontSize: 16, color: COLORS.grey },
 });
 

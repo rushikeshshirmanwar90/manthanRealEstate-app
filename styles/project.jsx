@@ -102,13 +102,16 @@ export const style = StyleSheet.create({
 
   card: {
     height: 250,
-    backgroundColor: "#f0c35f",
+    backgroundColor: "#0a2159",
     elevation: 10,
     width: width - 40,
     marginRight: 20,
     padding: 15,
     borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#f0c35f",
   },
+
   cardImage: {
     width: "100%",
     height: 120,

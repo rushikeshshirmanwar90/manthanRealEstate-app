@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Image,
-  Dimensions,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Image, Dimensions, StyleSheet, View } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 const { width, height } = Dimensions.get("window");
@@ -17,7 +12,7 @@ const App = ({ images }) => (
         autoplayDelay={2}
         autoplayLoop
         index={0}
-        paginationStyle={styles.paginationStyle} 
+        paginationStyle={styles.paginationStyle}
         paginationStyleItem={styles.paginationStyleItem}
         paginationActiveColor="#D6AA65"
         showPagination
@@ -28,7 +23,6 @@ const App = ({ images }) => (
               source={{ uri: item.attributes.formats.medium.url }}
               style={styles.image}
             />
-            
           </View>
         )}
       />
@@ -37,7 +31,6 @@ const App = ({ images }) => (
 );
 
 const styles = StyleSheet.create({
-
   swiperContainer: {
     marginVertical: 20,
     height: height * 0.4,
@@ -50,9 +43,11 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: width * 0.9, // Adjust width as needed
-    height: "100%", // Full height within the swiper container
+    width: width * 0.9,
+    height: "100%",
     borderRadius: 10,
+    borderWidth: 2.5,
+    borderColor: "#f0c35f",
   },
 
   paginationStyle: {
@@ -72,7 +67,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     backgroundColor: "#333", // Customize dot color
   },
-
 });
 
 export default App;

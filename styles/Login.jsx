@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import COLORS from "../components/consts/colors";
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,7 +13,7 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "700",
-    color: "#1D2A32",
+    color: "#fff",
     marginBottom: 6,
     textAlign: "center",
   },
@@ -20,7 +21,7 @@ export const styles = StyleSheet.create({
   subtitle: {
     fontSize: 15,
     fontWeight: "500",
-    color: "#fff",
+    color: COLORS.golden,
   },
 
   header: {
@@ -52,7 +53,7 @@ export const styles = StyleSheet.create({
   formLink: {
     fontSize: 18,
     fontWeight: "800",
-    color: "#fff",
+    color: COLORS.golden,
     textAlign: "center",
   },
 
@@ -72,7 +73,7 @@ export const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 17,
     fontWeight: "600",
-    color: "#fff",
+    color: COLORS.grey,
     marginBottom: 8,
   },
 
@@ -84,8 +85,8 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "500",
     color: "#222",
-    borderWidth: 1,
-    borderColor: "#C9D3DB",
+    borderWidth: 2,
+    borderColor: COLORS.golden,
     borderStyle: "solid",
   },
 
@@ -112,7 +113,9 @@ export const styles = StyleSheet.create({
   btn2: {
     height: 60,
     marginHorizontal: 20,
-    backgroundColor: "#02174a",
+    backgroundColor: "#0a2159",
+    borderWidth: 1,
+    borderColor: "#f0c35f",
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
@@ -123,8 +126,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#C9D3DB",
+    borderWidth: 2,
+    borderColor: COLORS.golden,
   },
 
   passwordInput: {

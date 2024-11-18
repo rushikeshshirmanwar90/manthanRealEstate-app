@@ -32,7 +32,7 @@ const Flats = (projectName) => {
   }, [loading]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "#203057", flex: 1 }}>
       <StatusBar
         translucent={false}
         backgroundColor={COLORS.white}

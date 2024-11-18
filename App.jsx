@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-
 // Drawer Screen Components
 import CompletedProject from "./screens/project/CompletedProject";
 import OnGoingProject from "./screens/project/OnGoingProject";
 import UpComingProject from "./screens/project/UpComingProject";
-
 // All Screen Components
 import Login from "./screens/Login";
 import Register from "./screens/Register";
@@ -18,11 +16,9 @@ import CustomDrawer from "./components/CustomDrawer";
 import Flats from "./screens/flats";
 import BrokerLeads from "./screens/BrokerLeads";
 import StaffLeads from "./screens/StaffLeads";
-
 // importing auth
 import { auth } from "./firebase/config";
 import url from "./components/route/api";
-
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -88,16 +84,18 @@ function HomeDrawer() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} name={userName} />}
       screenOptions={{
-        drawerStyle: {},
+        drawerStyle: {
+          backgroundColor: "#162c63",
+        },
         drawerLabelStyle: {
-          color: "#000",
+          color: "#f0c35f",
         },
-        drawerActiveBackgroundColor: "#cccccc",
-        drawerInactiveTintColor: "#fff",
+        drawerActiveBackgroundColor: "#1a3a85",
+        drawerInactiveTintColor: "#f0c35f",
         headerStyle: {
-          backgroundColor: "#f0c35f",
+          backgroundColor: "#162c63",
         },
-        headerTintColor: "#222",
+        headerTintColor: "#f0c35f",
       }}
     >
       <Drawer.Screen name="OnGoing Project" component={OnGoingProject} />
@@ -113,7 +111,17 @@ function HomeDrawer() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator >
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#162c63",
+          },
+          headerTintColor: "#f0c35f",
+          contentStyle: {
+            backgroundColor: "#162c63",
+          },
+        }}
+      >
         <Stack.Screen name="Manthan Infracare" component={OnBoardScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />

@@ -17,6 +17,7 @@ import Logo from "../assets/logo.png";
 import FastImage from "react-native-fast-image";
 import url from "../components/route/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import COLORS from "../components/consts/colors";
 
 const Index = () => {
   const [email, setEmail] = useState("");
@@ -168,7 +169,9 @@ const Index = () => {
                 }}
               >
                 <View style={styles.btn2}>
-                  <Text style={{ color: "white", fontSize: 20 }}>Login in</Text>
+                  <Text style={{ color: COLORS.golden, fontSize: 20 }}>
+                    Login in
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>

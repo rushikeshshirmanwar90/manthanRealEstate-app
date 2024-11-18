@@ -19,6 +19,8 @@
     "@strapi/blocks-react-renderer": "^1.0.1",
     "@types/react": "~18.2.79",
     "expo": "~51.0.34",
+    "expo-font": "~12.0.10",
+    "expo-splash-screen": "~0.27.6",
     "expo-status-bar": "~1.12.1",
     "firebase": "^10.12.2",
     "react": "18.2.0",
@@ -35,9 +37,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-swiper-flatlist": "^3.2.4",
     "react-native-vector-icons": "^10.1.0",
-    "typescript": "~5.3.3",
-    "expo-splash-screen": "~0.27.6",
-    "expo-font": "~12.0.10"
+    "typescript": "~5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
