@@ -38,8 +38,8 @@ const OnBoardScreen = () => {
 
       <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
         <View>
-          <Text style={style.title}>Discover homes that inspire You,</Text>
-          <Text style={style.title}>On A Single Click</Text>
+          <Text style={style.title}>Hey There, </Text>
+          <Text style={style.title}>Welcome to Manthan Infracare.</Text>
         </View>
       </View>
 

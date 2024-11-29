@@ -300,10 +300,10 @@ const Details = ({ route }) => {
                 onPress={handleWhatsAppPress}
               >
                 <Icon name="whatsapp" size={20} color="#fff" />
-                <Text style={style.wBtn}>WhatsApp Message</Text>
+                <Text style={style.wBtn}>WhatsApp Now</Text>
               </TouchableOpacity>
               <TouchableOpacity style={style.button} onPress={handleCallPress}>
-                <Icon name="phone" size={20} color="#fff" />
+                <Icon name="phone" size={20} color="#0774C4" />
                 <Text style={style.buttonText}>Call Us Now</Text>
               </TouchableOpacity>
             </View>
@@ -390,29 +390,36 @@ const style = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: "#333",
-    padding: 10,
+    backgroundColor: "#fff",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderColor: "#0774C4",
+    borderWidth: 3,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     borderRadius: 5,
   },
 
   buttonText: {
-    marginLeft: 5,
-    color: "#fff",
+    marginLeft: 8,
+    color: "#0774C4",
     fontWeight: "bold",
+    width: 100,
   },
 
   wButton: {
     backgroundColor: "#25d366",
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 5,
+    width: 165,
   },
 
   wBtn: {
-    marginLeft: 5,
+    marginLeft: 8,
     color: "#fff",
     fontWeight: "bold",
   },
