@@ -19,7 +19,6 @@ import { auth } from "../firebase/config";
 import COLORS from "../components/consts/colors";
 import url from "../components/route/api";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Skeleton from "../components/Skeleton";
 
 // importing components
 import Model from "../components/Model";
@@ -386,12 +385,13 @@ const style = StyleSheet.create({
   container: {
     marginTop: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
+    gap: 40,
     padding: 10,
   },
   button: {
     backgroundColor: "#fff",
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     paddingVertical: 10,
     borderColor: "#0774C4",
     borderWidth: 3,

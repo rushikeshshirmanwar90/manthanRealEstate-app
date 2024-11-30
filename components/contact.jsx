@@ -11,7 +11,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 const Contact = ({ message }) => {
   const handleWhatsAppPress = async () => {
     try {
-      const url = `whatsapp://send?phone=8285354444&text=${message}`;
+      const url = `whatsapp://send?phone=8285374444&text=${message}`;
       Linking.openURL(url).catch(() => {
         Alert.alert("Make sure WhatsApp is installed on your device");
       });
@@ -22,7 +22,7 @@ const Contact = ({ message }) => {
 
   const handleCallPress = async () => {
     try {
-      Linking.openURL("tel:+918285354444");
+      Linking.openURL("tel:+918285374444");
     } catch (error) {
       Alert.alert(error.message);
     }

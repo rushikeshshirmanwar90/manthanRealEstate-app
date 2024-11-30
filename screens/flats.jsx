@@ -11,6 +11,7 @@ import url from "../components/route/api";
 import Card from "../components/Cards";
 import Swiper from "../components/swiper";
 import Skeleton from "../components/Skeleton";
+import Contact from "../components/contact";
 
 const { width } = Dimensions.get("screen");
 
@@ -48,7 +49,6 @@ const Flats = (projectName) => {
             <Skeleton width={375} height={350} />
           </View>
         )}
-
         {!loading ? (
           <View style={{ flex: 1, marginTop: 45 }}>
             <FlatList
@@ -68,6 +68,7 @@ const Flats = (projectName) => {
             <Skeleton width={370} height={100} />
           </View>
         )}
+        <Contact message={`Hey there i am interested in\n ${name} `} />
       </View>
     </SafeAreaView>
   );

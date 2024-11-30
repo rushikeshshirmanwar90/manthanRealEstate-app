@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 
 // IMPORTING STYLES
 import { style } from "../styles/project";
+import Contact from "./contact";
 
 const ProjectCard = ({ project }) => {
   const navigation = useNavigation();

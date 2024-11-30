@@ -16,6 +16,7 @@ import building from "../../assets/loading/giphy.gif";
 // IMPORTING CUSTOM COMPONENTS
 import ProjectCard from "../../components/ProjectCard";
 import Skeleton from "../../components/Skeleton";
+import Contact from "../../components/contact";
 
 const { width } = Dimensions.get("screen");
 
@@ -63,6 +64,9 @@ const CompletedProject = () => {
           <Text style={styles.noProjectsText}>No Completed Projects Found</Text>
         </View>
       )}
+      <View style={{ marginBottom: -180 }}>
+        <Contact message={`Hello I want to buy a flat`} />
+      </View>
     </SafeAreaView>
   );
 };

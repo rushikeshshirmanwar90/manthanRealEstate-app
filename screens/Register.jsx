@@ -172,7 +172,10 @@ const Index = () => {
                   onValueChange={(itemValue) => setLoginType(itemValue)}
                 >
                   <Picker.Item label="I am looking for a house" value="user" />
-                  <Picker.Item label="I am a broker" value="broker" />
+                  <Picker.Item
+                    label="I want to be a Channel Partner"
+                    value="broker"
+                  />
                 </Picker>
               </View>
             </View>

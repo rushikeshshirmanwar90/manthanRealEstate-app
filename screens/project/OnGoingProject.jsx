@@ -15,6 +15,7 @@ import building from "../../assets/loading/giphy.gif";
 // IMPORTING CUSTOM COMPONENTS
 import ProjectCard from "../../components/ProjectCard";
 import Skeleton from "../../components/Skeleton";
+import Contact from "../../components/contact";
 
 const { width } = Dimensions.get("screen");
 
@@ -37,31 +38,51 @@ const CompletedProject = () => {
   return (
     <SafeAreaView style={{ backgroundColor: "#203057", flex: 1 }}>
       <StatusBar
-        translucent={false}
+        translucent={true}
         backgroundColor={"#fff"}
         barStyle="dark-content"
       />
 
-      {loading ? (
-        <View style={{ marginHorizontal: 20 }}>
-          <Skeleton width={380} height={180} />
+      {/* <Text
+        style={{
+          color: COLORS.golden,
+          fontSize: 20,
+          paddingLeft: 20,
+          paddingTop: 10,
+        }}
+      >
+        Hello Rushikesh 👋
+      </Text> */}
+
+      <View>
+        {loading ? (
+          <View style={{ marginHorizontal: 20 }}>
+            <Skeleton width={380} height={180} />
+          </View>
+        ) : projects.length !== 0 ? (
+          <View>
+            <FlatList
+              snapToInterval={width - 20}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
+              data={projects}
+              renderItem={({ item }) => <ProjectCard project={item} />}
+            />
+          </View>
+        ) : (
+          <View style={styles.noProjectsContainer}>
+            {/* GIF */}
+            <Image source={building} style={styles.gif} />
+            {/* Text */}
+            <Text style={styles.noProjectsText}>
+              No Completed Projects Found
+            </Text>
+          </View>
+        )}
+        <View style={{ marginBottom: -180 }}>
+          <Contact message={`Hello I want to buy a flat`} />
         </View>
-      ) : projects.length !== 0 ? (
-        <FlatList
-          snapToInterval={width - 20}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
-          data={projects}
-          renderItem={({ item }) => <ProjectCard project={item} />}
-        />
-      ) : (
-        <View style={styles.noProjectsContainer}>
-          {/* GIF */}
-          <Image source={building} style={styles.gif} />
-          {/* Text */}
-          <Text style={styles.noProjectsText}>No Completed Projects Found</Text>
-        </View>
-      )}
+      </View>
     </SafeAreaView>
   );
 };

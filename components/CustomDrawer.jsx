@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
+  Alert,
 } from "react-native";
 import {
   DrawerContentScrollView,
@@ -24,8 +25,6 @@ const CustomDrawer = (props) => {
   const [userType, setUserType] = useState("");
   const [storedName, setStoredName] = useState("UserName");
   const [userId, setUserId] = useState("");
-
-  // Loading State
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -63,36 +62,48 @@ const CustomDrawer = (props) => {
   }, [userId]);
 
   if (loading) {
-    return null; // Consider showing a loading spinner here
+    return null;
   }
 
-  // Social Media Links
   const socialLinks = [
-    { platform: "Instagram", url: "https://instagram.com", icon: "instagram" },
-    { platform: "Facebook", url: "https://facebook.com", icon: "facebook" },
-    { platform: "YouTube", url: "https://youtube.com", icon: "youtube-play" },
+    {
+      platform: "Instagram",
+      url: "https://www.instagram.com/manthaninfracare/profilecard/?igsh=MXZlZG5hNXJybWp6Nw==FFFFFF",
+      icon: "instagram",
+    },
+    {
+      platform: "Facebook",
+      url: "https://www.facebook.com/profile.php?id=61563087785902&mibextid=ZbWKwLF",
+      icon: "facebook",
+    },
+    {
+      platform: "YouTube",
+      url: "https://www.youtube.com/@Manthan_Infracare",
+      icon: "youtube-play",
+    },
     {
       platform: "WhatsApp",
-      url: "https://wa.me/<YourPhoneNumber>",
+      url: "https://wa.me/+918285374444",
       icon: "whatsapp",
     },
   ];
 
+  const handleShare = () => {
+    Alert.alert("Share", "Sharing functionality will be added here.");
+  };
+
+  const handleVisitWebsite = () => {
+    Linking.openURL("https://manthaninfracare.com/");
+  };
+
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
-      {/* Drawer Header */}
       <View style={styles.drawerHeader}>
-        <Text style={styles.greeting}>Hello, {storedName}</Text>
+        <Text style={styles.greeting}>Hii 👋, {storedName} </Text>
       </View>
 
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "space-between",
-        }}
-      >
+      <View style={{ flex: 1, justifyContent: "space-between" }}>
         <View>
-          {/* Drawer Items */}
           {userType !== "staff" && <DrawerItemList {...props} />}
           {userType === "staff" && (
             <DrawerItem
@@ -100,9 +111,43 @@ const CustomDrawer = (props) => {
               onPress={() => navigation.navigate("Assign Leads")}
             />
           )}
+
+          <View style={styles.separator} />
+
+          <DrawerItem
+            label="Our Achievements"
+            onPress={() => navigation.navigate("Achievements")}
+            labelStyle={styles.goldenLabel}
+            icon={({ focused, size }) => (
+              <FontAwesome name="trophy" size={18} color="#f0c35f" />
+            )}
+          />
+          <DrawerItem
+            label="Events"
+            onPress={() => navigation.navigate("Events")}
+            labelStyle={styles.goldenLabel}
+            icon={({ focused, size }) => (
+              <FontAwesome name="calendar" size={18} color="#f0c35f" />
+            )}
+          />
+          <DrawerItem
+            label="Share"
+            onPress={handleShare}
+            labelStyle={styles.goldenLabel}
+            icon={({ focused, size }) => (
+              <FontAwesome name="share-alt" size={18} color="#f0c35f" />
+            )}
+          />
+          <DrawerItem
+            label="Visit Website"
+            onPress={handleVisitWebsite}
+            labelStyle={styles.goldenLabel}
+            icon={({ focused, size }) => (
+              <FontAwesome name="globe" size={18} color="#f0c35f" />
+            )}
+          />
         </View>
 
-        {/* Social Media Links */}
         <View style={styles.socialLinks}>
           {socialLinks.map((link, index) => (
             <TouchableOpacity
@@ -116,7 +161,6 @@ const CustomDrawer = (props) => {
         </View>
       </View>
 
-      {/* Sign Out Button */}
       <View style={styles.signOutContainer}>
         <Button
           title="Sign Out"
@@ -149,11 +193,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  separator: {
+    height: 1,
+    backgroundColor: "#f0c35f",
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+  goldenLabel: {
+    color: "#f0c35f",
+    fontWeight: "500",
+    marginLeft: -20, // Added to adjust label position with icons
+  },
   socialLinks: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "flex-end",
     paddingHorizontal: 10,
+    paddingBottom: 10,
     borderTopWidth: 1,
     borderTopColor: "#f0c35f",
     borderBottomWidth: 1,

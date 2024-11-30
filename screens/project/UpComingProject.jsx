@@ -7,7 +7,7 @@ import {
   Text,
   View,
   StyleSheet,
-  Image
+  Image,
 } from "react-native";
 import COLORS from "../../components/consts/colors";
 import url from "../../components/route/api";
@@ -17,6 +17,7 @@ import building from "../../assets/loading/giphy.gif";
 // IMPORTING CUSTOM COMPONENTS
 import ProjectCard from "../../components/ProjectCard";
 import Skeleton from "../../components/Skeleton";
+import Contact from "../../components/contact";
 
 const { width } = Dimensions.get("screen");
 
@@ -61,9 +62,12 @@ const CompletedProject = () => {
           {/* GIF */}
           <Image source={building} style={styles.gif} />
           {/* Text */}
-          <Text style={styles.noProjectsText}>No Completed Projects Found</Text>
+          <Text style={styles.noProjectsText}>No UpComing Projects Found</Text>
         </View>
       )}
+      <View style={{ marginBottom: -180 }}>
+        <Contact message={`Hello I want to buy a flat`} />
+      </View>
     </SafeAreaView>
   );
 };
