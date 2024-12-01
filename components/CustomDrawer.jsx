@@ -89,7 +89,20 @@ const CustomDrawer = (props) => {
   ];
 
   const handleShare = () => {
-    Alert.alert("Share", "Sharing functionality will be added here.");
+    const shareOptions = {
+      message: "Check out Manthan Infracare!",
+      url: "https://play.google.com/store/apps/details?id=com.rushi_shrimanwar.manthanrealestate",
+      title: "Manthan Infracare",
+    };
+
+    Linking.shareSheet(shareOptions)
+      .then(() => {
+        Alert.alert("Success", "The share was successful!");
+      })
+      .catch((error) => {
+        Alert.alert("Error", "Failed to share. Please try again.");
+        console.log(error)
+      });
   };
 
   const handleVisitWebsite = () => {

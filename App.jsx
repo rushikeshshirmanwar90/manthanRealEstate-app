@@ -16,6 +16,9 @@ import CustomDrawer from "./components/CustomDrawer";
 import Flats from "./screens/flats";
 import BrokerLeads from "./screens/BrokerLeads";
 import StaffLeads from "./screens/StaffLeads";
+import Achievements from "./screens/Achievements";
+import Events from "./screens/Event";
+
 // importing auth
 import { auth } from "./firebase/config";
 import url from "./components/route/api";
@@ -135,6 +138,8 @@ export default function App() {
         <Stack.Screen name="Flats" component={Flats} />
         <Stack.Screen name="My Leads" component={BrokerLeads} />
         <Stack.Screen name="Assign Leads" component={StaffLeads} />
+        <Stack.Screen name="Achievements" component={Achievements} />
+        <Stack.Screen name="Events" component={Events} />
       </Stack.Navigator>
     </NavigationContainer>
   );

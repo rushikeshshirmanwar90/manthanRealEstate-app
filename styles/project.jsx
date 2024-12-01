@@ -101,7 +101,6 @@ export const style = StyleSheet.create({
   },
 
   card: {
-    height: 250,
     backgroundColor: "#0a2159",
     elevation: 10,
     width: width - 40,
@@ -117,6 +116,7 @@ export const style = StyleSheet.create({
     height: 120,
     borderRadius: 15,
   },
+
   facility: { flexDirection: "row", marginRight: 15 },
   facilityText: { marginLeft: 5, color: COLORS.grey },
 });

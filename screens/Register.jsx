@@ -35,49 +35,66 @@ const Index = () => {
     return unsubscribe;
   }, []);
 
-  const handleRegister = async () => {
-    if (email === "" || password === "") {
-      alert("Email and password cannot be empty.");
-      return;
-    }
+const handleRegister = async () => {
+  // Regular expressions for validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[6-9]\d{9}$/;
 
-    try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+  // Basic validations
+  if (name.trim() === "") {
+    alert("Full name is required.");
+    return;
+  }
 
-      const res = await fetch(`${url}/api/user-ids`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+  if (!phoneRegex.test(number)) {
+    alert("Please enter a valid phone number (10 digits starting with 6-9).");
+    return;
+  }
+
+  if (!emailRegex.test(email)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters long.");
+    return;
+  }
+
+  try {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+
+    const res = await fetch(`${url}/api/user-ids`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data: {
+          name: name,
+          number: number,
+          mail: email,
+          user_type: loginType,
+          userId: result._tokenResponse.localId,
         },
-        body: JSON.stringify({
-          data: {
-            name: name,
-            number: number,
-            mail: email,
-            user_type: loginType,
-            userId: result._tokenResponse.localId,
-          },
-        }),
-      });
+      }),
+    });
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`Failed to fetch: ${errorText}`);
-      }
-
-      // Store the user's name in AsyncStorage
-      await AsyncStorage.setItem("userName", name);
-      console.log("User created:", result.user.email);
-      navigation.replace("Home");
-    } catch (error) {
-      console.error("Error during registration:", error);
-      alert(`Registration failed: ${error.message}`);
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Failed to fetch: ${errorText}`);
     }
-  };
+
+    // Store the user's name in AsyncStorage
+    await AsyncStorage.setItem("userName", name);
+    console.log("User created:", result.user.email);
+    navigation.replace("Home");
+  } catch (error) {
+    console.error("Error during registration:", error);
+    alert(`Registration failed: ${error.message}`);
+  }
+};
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#162c63" }}>
