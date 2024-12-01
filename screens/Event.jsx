@@ -13,7 +13,6 @@ import COLORS from "../components/consts/colors";
 import { style } from "../styles/project";
 import url from "../components/route/api";
 import img from "../assets/loading/img1.jpg";
-import { Ionicons } from "@expo/vector-icons";
 
 const Events = () => {
   return (
@@ -40,7 +39,6 @@ const Events = () => {
                 fontWeight: "bold",
                 color: "#f0c35f",
                 marginTop: 5,
-                marginBottom: 5,
               },
               { textTransform: "capitalize" },
             ]}
@@ -48,10 +46,12 @@ const Events = () => {
             Manthan Park Opening
           </Text>
 
+          <Text style={{ color: "#A9A9A9", fontSize: 15, marginBottom: 10 }}>
+            Description
+          </Text>
+
           <View style={styles.buttonContainer}>
-
             <TouchableOpacity style={styles.virtualTag}>
-
               <Text
                 style={{
                   color: COLORS.golden,
@@ -61,30 +61,8 @@ const Events = () => {
               >
                 View More
               </Text>
-
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.virtualTag,
-                {
-                  marginTop: 10,
-                },
-              ]}
-            >
-
-              <Text
-                style={{
-                  color: COLORS.golden,
-                  fontSize: 16,
-                  fontWeight: "bold",
-                }}
-              >
-                View Video
-              </Text>
-
             </TouchableOpacity>
           </View>
-
         </View>
       </Pressable>
     </SafeAreaView>
@@ -97,7 +75,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 300,
   },
 
   virtualTag: {
