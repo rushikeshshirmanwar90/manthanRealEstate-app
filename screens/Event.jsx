@@ -10,9 +10,9 @@ import {
   Linking,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import COLORS from "../components/consts/colors"; // Ensure COLORS is exported properly
-import { style } from "../styles/project"; // Ensure style is exported properly
-import url from "../components/route/api"; // Ensure the correct API base URL
+import COLORS from "../components/consts/colors";
+import { style } from "../styles/project";
+import url from "../components/route/api";
 
 const Events = () => {
   const [events, setEvents] = useState([]);

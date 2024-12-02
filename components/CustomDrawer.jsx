@@ -71,25 +71,25 @@ const CustomDrawer = (props) => {
       platform: "Instagram",
       url: "https://www.instagram.com/manthaninfracare/profilecard/?igsh=MXZlZG5hNXJybWp6Nw==FFFFFF",
       icon: "instagram",
-      color: "#E1306C", // Instagram's official color
+      color: "#E1306C",
     },
     {
       platform: "Facebook",
       url: "https://www.facebook.com/profile.php?id=61563087785902&mibextid=ZbWKwLF",
       icon: "facebook",
-      color: "#1877F2", // Facebook's official color
+      color: "#1877F2",
     },
     {
       platform: "YouTube",
       url: "https://www.youtube.com/@Manthan_Infracare",
       icon: "youtube-play",
-      color: "#FF0000", // YouTube's official color
+      color: "#FF0000",
     },
     {
       platform: "WhatsApp",
       url: "https://wa.me/+918285374444",
       icon: "whatsapp",
-      color: "#25D366", // WhatsApp's official color
+      color: "#25D366", 
     },
   ];
 
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   goldenLabel: {
     color: "#f0c35f",
     fontWeight: "500",
-    marginLeft: -20, // Added to adjust label position with icons
+    marginLeft: -20
   },
   socialLinks: {
     flexDirection: "row",
