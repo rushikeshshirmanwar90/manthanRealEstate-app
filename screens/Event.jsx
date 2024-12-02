@@ -7,14 +7,33 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Linking,
 } from "react-native";
-import React from "react";
-import COLORS from "../components/consts/colors";
-import { style } from "../styles/project";
-import url from "../components/route/api";
-import img from "../assets/loading/img1.jpg";
+import React, { useEffect, useState } from "react";
+import COLORS from "../components/consts/colors"; // Ensure COLORS is exported properly
+import { style } from "../styles/project"; // Ensure style is exported properly
+import url from "../components/route/api"; // Ensure the correct API base URL
 
 const Events = () => {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`${url}/api/events?populate=*`);
+        const data = await response.json();
+        setEvents(data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -23,48 +42,74 @@ const Events = () => {
       }}
     >
       <StatusBar backgroundColor="#000" barStyle="light-content" />
-      <Pressable>
-        <View style={[style.card, { marginBottom: 20 }]}>
-          <Image
-            source={img}
-            style={style.cardImage}
-            onError={() => console.log("Error loading image")}
-            resizeMode="cover"
-          />
 
-          <Text
-            style={[
-              {
-                fontSize: 18,
-                fontWeight: "bold",
-                color: "#f0c35f",
-                marginTop: 5,
-              },
-              { textTransform: "capitalize" },
-            ]}
-          >
-            Manthan Park Opening
-          </Text>
-
-          <Text style={{ color: "#A9A9A9", fontSize: 15, marginBottom: 10 }}>
-            Description
-          </Text>
-
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.virtualTag}>
-              <Text
-                style={{
-                  color: COLORS.golden,
-                  fontSize: 16,
-                  fontWeight: "bold",
+      {loading ? (
+        <Text style={{ color: "#fff", textAlign: "center" }}>Loading...</Text>
+      ) : events.length === 0 ? (
+        <Text style={{ color: "#fff", textAlign: "center" }}>
+          No events available.
+        </Text>
+      ) : (
+        events.map((event, index) => (
+          <Pressable key={index}>
+            <View style={[style.card, { marginBottom: 20 }]}>
+              <Image
+                source={{
+                  uri:
+                    event.attributes.images.data[0]?.attributes.formats.medium
+                      .url || event.attributes.images.data[0]?.attributes.url,
                 }}
+                style={style.cardImage}
+                onError={() => console.log("Error loading image")}
+                resizeMode="cover"
+              />
+
+              <Text
+                style={[
+                  {
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    color: "#f0c35f",
+                    marginTop: 5,
+                  },
+                  { textTransform: "capitalize" },
+                ]}
               >
-                View More
+                {event.attributes.name}
               </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Pressable>
+
+              <Text
+                style={{ color: "#A9A9A9", fontSize: 15, marginBottom: 10 }}
+              >
+                {event.attributes.description}
+              </Text>
+
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.virtualTag}
+                  onPress={() => {
+                    if (event.attributes.youtube) {
+                      Linking.openURL(event.attributes.youtube);
+                    } else {
+                      console.log("No YouTube link available.");
+                    }
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.golden,
+                      fontSize: 16,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    View Video
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Pressable>
+        ))
+      )}
     </SafeAreaView>
   );
 };
@@ -82,7 +127,6 @@ const styles = StyleSheet.create({
     width: "90%",
     marginHorizontal: "auto",
     backgroundColor: "#0a2159",
-    color: COLORS.golden,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",

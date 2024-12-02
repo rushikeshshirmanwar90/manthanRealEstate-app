@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
+  Share,
 } from "react-native";
 import {
   DrawerContentScrollView,
@@ -70,39 +71,37 @@ const CustomDrawer = (props) => {
       platform: "Instagram",
       url: "https://www.instagram.com/manthaninfracare/profilecard/?igsh=MXZlZG5hNXJybWp6Nw==FFFFFF",
       icon: "instagram",
+      color: "#E1306C", // Instagram's official color
     },
     {
       platform: "Facebook",
       url: "https://www.facebook.com/profile.php?id=61563087785902&mibextid=ZbWKwLF",
       icon: "facebook",
+      color: "#1877F2", // Facebook's official color
     },
     {
       platform: "YouTube",
       url: "https://www.youtube.com/@Manthan_Infracare",
       icon: "youtube-play",
+      color: "#FF0000", // YouTube's official color
     },
     {
       platform: "WhatsApp",
       url: "https://wa.me/+918285374444",
       icon: "whatsapp",
+      color: "#25D366", // WhatsApp's official color
     },
   ];
 
-  const handleShare = () => {
-    const shareOptions = {
-      message: "Check out Manthan Infracare!",
-      url: "https://play.google.com/store/apps/details?id=com.rushi_shrimanwar.manthanrealestate",
-      title: "Manthan Infracare",
-    };
-
-    Linking.shareSheet(shareOptions)
-      .then(() => {
-        Alert.alert("Success", "The share was successful!");
-      })
-      .catch((error) => {
-        Alert.alert("Error", "Failed to share. Please try again.");
-        console.log(error)
+  const handleShare = async () => {
+    try {
+      await Share.share({
+        message:
+          "https://play.google.com/store/apps/details?id=com.rushi_shrimanwar.manthanrealestate",
       });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const handleVisitWebsite = () => {
@@ -168,7 +167,7 @@ const CustomDrawer = (props) => {
               onPress={() => Linking.openURL(link.url)}
               style={styles.socialIcon}
             >
-              <FontAwesome name={link.icon} size={24} color="#f0c35f" />
+              <FontAwesome name={link.icon} size={24} color={link.color} />
             </TouchableOpacity>
           ))}
         </View>
