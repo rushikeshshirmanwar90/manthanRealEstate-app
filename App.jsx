@@ -18,6 +18,7 @@ import BrokerLeads from "./screens/BrokerLeads";
 import StaffLeads from "./screens/StaffLeads";
 import Achievements from "./screens/Achievements";
 import Events from "./screens/Event";
+import Imagination from "./screens/special/Imagination";
 
 // importing auth
 import { auth } from "./firebase/config";
@@ -140,6 +141,7 @@ export default function App() {
         <Stack.Screen name="Assign Leads" component={StaffLeads} />
         <Stack.Screen name="Achievements" component={Achievements} />
         <Stack.Screen name="Events" component={Events} />
+        <Stack.Screen name="Imagination" component={Imagination} />
       </Stack.Navigator>
     </NavigationContainer>
   );

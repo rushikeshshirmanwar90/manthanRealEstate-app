@@ -1,35 +1,20 @@
 import React from "react";
-import { View, Text, Image, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { style } from "../../styles/project";
 
-// IMPORTING STYLES
-import { style } from "../styles/project";
-import Contact from "./contact";
-
-const ProjectCard = ({ project }) => {
+const Component = () => {
   const navigation = useNavigation();
-
-  const img =
-    project.attributes.projectImage.data[0].attributes.formats.medium.url;
-
-  const imgData = project.attributes.projectImage.data;
-  const name = project.attributes.projectName;
-
-  const data = {
-    name: project.attributes.projectName,
-    address: project.attributes.address,
-    imgs: imgData,
-  };
 
   return (
     <Pressable
       style={({ pressed }) => [{ opacity: pressed ? 0.8 : 1 }]}
-      onPress={() => navigation.navigate("Flats", data)}
+      onPress={() => navigation.navigate("Imagination")}
     >
       <View style={[style.card, { marginBottom: 20 }]}>
         <Image
           source={{
-            uri: `${img}`,
+            uri: `https://res.cloudinary.com/dlcq8i2sc/image/upload/v1733238485/Whats_App_Image_2024_12_03_at_20_36_35_3f8eca9b_0ad6d58b5b.jpg`,
           }}
           style={style.cardImage}
         />
@@ -47,11 +32,11 @@ const ProjectCard = ({ project }) => {
                 { textTransform: "capitalize" },
               ]}
             >
-              {project.attributes.projectName}
+              Imagination Magic Resort
             </Text>
           </View>
           <Text style={{ color: "#A9A9A9", fontSize: 15, marginTop: 5 }}>
-            {project.attributes.address}
+            Mumbai Thane, Taluka : Shahapur, Mauza : Jambulwad - Ranvir
           </Text>
         </View>
       </View>
@@ -59,4 +44,4 @@ const ProjectCard = ({ project }) => {
   );
 };
 
-export default ProjectCard;
+export default Component;

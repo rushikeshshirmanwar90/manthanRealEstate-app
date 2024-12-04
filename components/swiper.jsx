@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     marginHorizontal: 2,
-    backgroundColor: "#333", // Customize dot color
+    backgroundColor: "#333",
   },
 });
 
