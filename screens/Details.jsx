@@ -25,7 +25,9 @@ import Model from "../components/Model";
 const { width } = Dimensions.get("screen");
 
 const Details = ({ route }) => {
-  const house = route.params;
+  const house = route.params.house;
+  const projectName =
+    route.params.house.attributes.project.data.attributes.projectName;
 
   const [userType, setUserType] = useState("");
   const [userName, setUserName] = useState("");
@@ -152,9 +154,7 @@ const Details = ({ route }) => {
         );
       }
 
-      const url = `whatsapp://send?phone=8285354444&text=Hey There I am ${userName} interested in your Flat 
-      \n
-        FlatId : ${house.id}
+      const url = `whatsapp://send?phone=9860102144&text=Hey There I am ${userName} interested in ${projectName}\nFlat Id : ${house.id}\nBuilding Name : ${house.attributes.name}
       `;
       Linking.openURL(url).catch(() => {
         Alert.alert("Make sure WhatsApp is installed on your device");
@@ -178,7 +178,7 @@ const Details = ({ route }) => {
           "SELF"
         );
       }
-      Linking.openURL("tel:+918285354444");
+      Linking.openURL("tel:+919860102144");
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -225,7 +225,9 @@ const Details = ({ route }) => {
 
           <TouchableOpacity onPress={handleYTPress}>
             <View style={style.virtualTag}>
-              <Text style={{ color: COLORS.golden }}>Virtual tour</Text>
+              <Text style={{ color: COLORS.golden, fontSize: 15 }}>
+                View Video
+              </Text>
             </View>
           </TouchableOpacity>
         </View>

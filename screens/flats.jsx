@@ -57,7 +57,11 @@ const Flats = (projectName) => {
               contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
               data={flats}
               renderItem={({ item }) => (
-                <Card house={item} address={projectName.route.params.address} />
+                <Card
+                  house={item}
+                  projectName={projectName}
+                  address={projectName.route.params.address}
+                />
               )}
             />
           </View>

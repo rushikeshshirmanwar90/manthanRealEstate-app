@@ -4,13 +4,18 @@ import { useNavigation } from "@react-navigation/native";
 import COLORS from "../components/consts/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-const Card = ({ house, address }) => {
+const Card = ({ house, address, projectName }) => {
   const navigation = useNavigation();
+
+  const data = {
+    house: house,
+    projectName: projectName,
+  };
 
   return (
     <Pressable
       style={({ pressed }) => [{ opacity: pressed ? 0.8 : 1 }]}
-      onPress={() => navigation.navigate("Details", house)}
+      onPress={() => navigation.navigate("Details", data)}
     >
       <View style={style.card}>
         <Image

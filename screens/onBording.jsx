@@ -13,10 +13,47 @@ import {
 import COLORS from "../components/consts/colors";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "../firebase/config";
+import url from "../components/route/api";
 
 const OnBoardScreen = () => {
   const navigation = useNavigation();
   const [isUser, setIsUser] = useState(false);
+  const [storedName, setStoredName] = useState("There");
+  const [userId, setUserId] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserId(user.uid);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      if (!userId) return;
+      try {
+        console.log(userId);
+        const res = await fetch(
+          `${url}/api/user-ids?filters[$and][0][userId][$eq]=${userId}`
+        );
+        const data = await res.json();
+        const tmpUserType = data.data[0]?.attributes?.user_type || "";
+        const name = data.data[0]?.attributes.name || "";
+        setStoredName(name);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    getUserData();
+  }, [userId]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -38,7 +75,10 @@ const OnBoardScreen = () => {
 
       <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
         <View>
-          <Text style={style.title}>Hey There, </Text>
+          <Text style={style.title}>
+            <Text style={({ fontStyle: "italic" }, style.title)}>Hey</Text>{" "}
+            {storedName},
+          </Text>
           <Text style={style.title}>Welcome to Manthan Infracare.</Text>
         </View>
       </View>
@@ -92,6 +132,8 @@ const style = StyleSheet.create({
     height: 420,
     width: "100%",
     borderBottomLeftRadius: 100,
+    borderColor: COLORS.golden,
+    borderWidth: 2.7,
   },
   indicatorContainer: {
     height: 20,
@@ -119,7 +161,7 @@ const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  title: { fontSize: 30, fontWeight: "bold", color: COLORS.golden },
+  title: { fontSize: 25, fontWeight: "bold", color: COLORS.golden },
   textStyle: { fontSize: 16, color: COLORS.grey },
 });
 

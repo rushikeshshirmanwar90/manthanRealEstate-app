@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
-  Alert,
   Share,
 } from "react-native";
 import {
@@ -89,7 +88,7 @@ const CustomDrawer = (props) => {
       platform: "WhatsApp",
       url: "https://wa.me/+918285374444",
       icon: "whatsapp",
-      color: "#25D366", 
+      color: "#25D366",
     },
   ];
 
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
   goldenLabel: {
     color: "#f0c35f",
     fontWeight: "500",
-    marginLeft: -20
+    marginLeft: -20,
   },
   socialLinks: {
     flexDirection: "row",

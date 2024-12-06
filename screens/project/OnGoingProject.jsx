@@ -7,7 +7,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
 } from "react-native";
 import COLORS from "../../components/consts/colors";
 import url from "../../components/route/api";
@@ -38,56 +37,56 @@ const CompletedProject = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ backgroundColor: "#203057", flex: 1 }}>
       <StatusBar
         translucent={true}
         backgroundColor={"#fff"}
         barStyle="dark-content"
       />
 
-      {loading ? (
-        <View style={{ marginHorizontal: 20 }}>
-          <Skeleton width={380} height={180} />
+      <View>
+        {loading ? (
+          <View style={{ marginHorizontal: 20 }}>
+            <Skeleton width={380} height={180} />
+          </View>
+        ) : projects.length !== 0 ? (
+          <View>
+            <FlatList
+              snapToInterval={width - 20}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingLeft: 20, paddingVertical: 10 }}
+              data={projects}
+              renderItem={({ item }) => <ProjectCard project={item} />}
+              ListHeaderComponent={
+                <View
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <Component />
+                </View>
+              }
+            />
+          </View>
+        ) : (
+          <View style={styles.noProjectsContainer}>
+            {/* GIF */}
+            <Image source={building} style={styles.gif} />
+            {/* Text */}
+            <Text style={styles.noProjectsText}>
+              No Completed Projects Found
+            </Text>
+          </View>
+        )}
+        <View style={{ marginBottom: -180 }}>
+          <Contact message={`Hello I want to buy a flat`} />
         </View>
-      ) : projects.length !== 0 ? (
-        <FlatList
-          data={projects}
-          renderItem={({ item }) => <ProjectCard project={item} />}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={styles.contentContainerStyle}
-          showsVerticalScrollIndicator={false}
-          // Add Component as a header
-          ListHeaderComponent={
-            <View style={styles.headerContainer}>
-              <Component />
-            </View>
-          }
-        />
-      ) : (
-        <View style={styles.noProjectsContainer}>
-          <Image source={building} style={styles.gif} />
-          <Text style={styles.noProjectsText}>No Completed Projects Found</Text>
-        </View>
-      )}
-      <View style={styles.contactContainer}>
-        <Contact message={`Hello I want to buy a flat`} />
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#203057",
-  },
-  contentContainerStyle: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  headerContainer: {
-    marginTop: 10,
-  },
   noProjectsContainer: {
     flex: 1,
     justifyContent: "center",
@@ -104,9 +103,6 @@ const styles = StyleSheet.create({
     color: COLORS.golden,
     fontWeight: "bold",
     textAlign: "center",
-  },
-  contactContainer: {
-    padding: 20,
   },
 });
 
