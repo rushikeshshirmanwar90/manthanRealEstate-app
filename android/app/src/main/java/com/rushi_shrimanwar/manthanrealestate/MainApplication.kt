@@ -1,4 +1,4 @@
-package com.manthaninfracare
+package com.rushi_shrimanwar.manthanrealestate
 
 import android.app.Application
 import android.content.res.Configuration

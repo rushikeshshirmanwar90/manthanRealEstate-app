@@ -1,4 +1,4 @@
-package com.manthaninfracare
+package com.rushi_shrimanwar.manthanrealestate
 
 import android.os.Build
 import android.os.Bundle

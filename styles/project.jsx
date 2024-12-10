@@ -119,4 +119,19 @@ export const style = StyleSheet.create({
 
   facility: { flexDirection: "row", marginRight: 15 },
   facilityText: { marginLeft: 5, color: COLORS.grey },
+
+  button: {
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0a2159",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#f0c35f",
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: COLORS.golden,
+  },
 });

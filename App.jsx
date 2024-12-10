@@ -19,6 +19,7 @@ import StaffLeads from "./screens/StaffLeads";
 import Achievements from "./screens/Achievements";
 import Events from "./screens/Event";
 import Imagination from "./screens/special/Imagination";
+import EventDetails from "./screens/EventDetails";
 
 // importing auth
 import { auth } from "./firebase/config";
@@ -102,6 +103,7 @@ function HomeDrawer() {
         headerTintColor: "#f0c35f",
       }}
     >
+
       <Drawer.Screen name="OnGoing Project" component={OnGoingProject} />
       <Drawer.Screen name="Completed Project" component={CompletedProject} />
       <Drawer.Screen name="UpComing Project" component={UpComingProject} />
@@ -142,6 +144,7 @@ export default function App() {
         <Stack.Screen name="Achievements" component={Achievements} />
         <Stack.Screen name="Events" component={Events} />
         <Stack.Screen name="Imagination" component={Imagination} />
+        <Stack.Screen name="Event Details" component={EventDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
